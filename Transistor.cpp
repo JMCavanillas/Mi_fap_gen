@@ -1,11 +1,11 @@
 
 #include "Transistor.hpp"
 
-Transistor::Transistor(int numID, int NRange, std::vector<std::vector<int>>* frecs)
+Transistor::Transistor(int numID, int NRange, std::vector<std::vector<int>>* freqs)
 {
     this->numID_ = numID;
     this->NRange_ = NRange; 
-    this->frecs_ = frecs;
+    this->freqs_ = freqs;
 }
 
 int Transistor::getNRange()
@@ -20,17 +20,17 @@ int Transistor::getNRange()
 int Transistor::getRandFrec()
 {   
     int frecuencia=getRandomInt(0,getFreqRange()-1);
-    return (*frecs_)[NRange_][frecuencia];
+    return (*freqs_)[NRange_][frecuencia];
 }
 
-void Transistor::setFrecs(std::vector<std::vector<int>>* frecs)
+void Transistor::setFrecs(std::vector<std::vector<int>>* freqs)
 {
-    this->frecs_ = frecs;
+    this->freqs_ = freqs;
 }
 
 int Transistor::operator[](unsigned indx)
 {
-    return (*frecs_)[NRange_][indx];
+    return (*freqs_)[NRange_][indx];
 }
 
 int Transistor::getNumID()
@@ -40,7 +40,7 @@ int Transistor::getNumID()
 
 int Transistor::getFreqRange()
 {
-    return (*frecs_)[NRange_].size();
+    return (*freqs_)[NRange_].size();
 }
 
 

@@ -11,7 +11,7 @@ class Transistor{
 
     int numID_;                                     // Id del transistor
     int NRange_;                                    // Numero de rango
-    std::vector<std::vector<int>>* frecs_;          // Vector de rangos de frecuencias
+    std::vector<std::vector<int>>* freqs_;          // Vector de rangos de frecuencias
     
     public: 
     Transistor(int numID, int NRange, std::vector<std::vector<int>>* frecs);

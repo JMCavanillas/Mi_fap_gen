@@ -4,10 +4,15 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>MixOperator.hpp</itemPath>
       <itemPath>Parser.hpp</itemPath>
+      <itemPath>Population.hpp</itemPath>
       <itemPath>Random.hpp</itemPath>
       <itemPath>Restriction.hpp</itemPath>
+      <itemPath>Search.hpp</itemPath>
+      <itemPath>SelectionModel.hpp</itemPath>
       <itemPath>Transistor.hpp</itemPath>
+      <itemPath>specimen.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -17,9 +22,11 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Parser.cpp</itemPath>
+      <itemPath>Population.cpp</itemPath>
       <itemPath>Random.cpp</itemPath>
       <itemPath>Transistor.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
+      <itemPath>specimen.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -46,9 +53,15 @@
           <standard>11</standard>
         </ccTool>
       </compileType>
+      <item path="MixOperator.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Parser.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Parser.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Population.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Population.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Random.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -56,11 +69,19 @@
       </item>
       <item path="Restriction.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Search.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SelectionModel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Transistor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Transistor.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="specimen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="specimen.hpp" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -83,9 +104,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="MixOperator.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Parser.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Parser.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Population.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Population.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Random.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -93,11 +120,19 @@
       </item>
       <item path="Restriction.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Search.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SelectionModel.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Transistor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Transistor.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="specimen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="specimen.hpp" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
