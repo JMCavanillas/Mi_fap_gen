@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include "Random.hpp"
 
 
 class Transistor{
@@ -13,7 +14,6 @@ class Transistor{
     std::vector<std::vector<int>>* frecs_;          // Vector de rangos de frecuencias
     
     public: 
-    static int Seed;
     Transistor(int numID, int NRange, std::vector<std::vector<int>>* frecs);
 
     int getNRange(); 

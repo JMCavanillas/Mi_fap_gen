@@ -13,10 +13,14 @@ int Transistor::getNRange()
     return NRange_;
 }
 
-
+/**
+ * Se auto-asigna una frecuencia aleatoria dentro de su rango de frecuencias
+ * @return 
+ */
 int Transistor::getRandFrec()
-{
-    // Reescribir con Rand 
+{   
+    int frecuencia=getRandomInt(0,getFreqRange()-1);
+    return (*frecs_)[NRange_][frecuencia];
 }
 
 void Transistor::setFrecs(std::vector<std::vector<int>>* frecs)

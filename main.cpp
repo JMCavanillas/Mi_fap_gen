@@ -9,7 +9,7 @@
 
 #include "Parser.hpp"
 #include "Restriction.hpp"
-
+#include "Random.hpp"
 using namespace std;
 
 /*
@@ -17,10 +17,10 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     
-    int seed = 0;
+    int seed = 687685;
     std::srand(seed);
     std::vector<Restriction> restrictions; 
-    
+
     Parser::RTParse("instancias-modificadas/graph05/ctr.txt", restrictions);
     
     for(int i = 0; i < restrictions.size(); ++i)
