@@ -45,8 +45,9 @@ void Parser::FRangeParse(std::string path,
  * @return El numero total de transistores generado
  */
 int Parser::TParse(std::string path,
-                   std::vector<std::vector<int>>* frecs,
-                   std::vector<Transistor>& result, int TNumber)
+        std::vector<std::vector<int>>* frecs,
+        std::vector<Transistor>& result, std::vector<int>& equivalenceIndex,
+        int TNumber)
 {
     std::ifstream input_file;
     input_file.open(path);
@@ -72,7 +73,11 @@ int Parser::TParse(std::string path,
         result.push_back(aux);
 
     }
-
+    
+    equivalenceIndex.reserve(indx_trans+1);
+    for (int i = 0; i < result.size(); ++i)
+        equivalenceIndex[result[i].getNumID()] = i;
+    
     if (indx_trans < TNumber)
         return indx_trans;
     return TNumber;
@@ -85,7 +90,8 @@ int Parser::TParse(std::string path,
  * @param TNumber
  * @return El numero de transistores considerados
  */
-int Parser::RTParse(std::string path, std::vector<Restriction>& restrictions)
+int Parser::RTParse(std::string path, std::vector<Restriction>& restrictions, 
+        std::vector<int>& equivalenceIndex)
 {
     std::ifstream input_file;
     input_file.open(path);
@@ -116,7 +122,7 @@ int Parser::RTParse(std::string path, std::vector<Restriction>& restrictions)
         iss >> bound;
         iss >> interference;
         
-        Restriction aux; aux.trans1 = trans1; aux.trans2 = trans2;
+        Restriction aux; aux.trans1 = equivalenceIndex[trans1]; aux.trans2 = equivalenceIndex[trans2];
         aux.bound = bound; aux.interference = interference;
         
         restrictions.push_back(aux);

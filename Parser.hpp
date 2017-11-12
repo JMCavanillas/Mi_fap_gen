@@ -15,11 +15,13 @@ class Parser {
     public:
     static void FRangeParse(std::string path, std::vector<std::vector<int>>& results);
 
-    static int RTParse(std::string path, std::vector<Restriction>& restrictions); 
+    static int RTParse(std::string path, std::vector<Restriction>& restrictions,
+                        std::vector<int>& equivalenceIndex); 
 
     static int TParse(std::string path,
                       std::vector<std::vector<int>>* frecs, 
-                      std::vector<Transistor>& result, int TNumber = INT_MAX);
+                      std::vector<Transistor>& result, std::vector<int>& equivalenceIndex,
+                      int TNumber = INT_MAX);
 };
 
 
