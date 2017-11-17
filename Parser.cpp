@@ -97,7 +97,7 @@ int Parser::RTParse(std::string path, std::vector<Restriction>& restrictions,
     input_file.open(path);
     if(!input_file.good())
         throw std::domain_error("File not found");
-
+    
     std::string currentLine;
     while(std::getline(input_file, currentLine))
     {
@@ -124,7 +124,19 @@ int Parser::RTParse(std::string path, std::vector<Restriction>& restrictions,
         
         Restriction aux; aux.trans1 = equivalenceIndex[trans1]; aux.trans2 = equivalenceIndex[trans2];
         aux.bound = bound; aux.interference = interference;
-        
+
         restrictions.push_back(aux);
     }
+void Parser::genIndexTransRestr(std::vector<Transistor>& transistors_, 
+                std::vector<Restriction>& restrictions_, std::vector<int>& result)
+{
+    int k = 0;
+    for(int i = 0; i < transistors_.size() && k <= restrictions_.size(); ++i)
+    {
+        result.push_back(k);
+        while (restrictions_[k].trans1 == i)
+            ++k;
+        
+    }
+}
 }

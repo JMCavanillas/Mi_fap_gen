@@ -22,6 +22,9 @@ class Parser {
                       std::vector<std::vector<int>>* frecs, 
                       std::vector<Transistor>& result, std::vector<int>& equivalenceIndex,
                       int TNumber = INT_MAX);
+    
+    void genIndexTransRestr(std::vector<Transistor>& transistors, std::vector<Restriction>& restrictions,
+            std::vector<int>& result);
 };
 
 

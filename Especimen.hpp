@@ -20,17 +20,28 @@
 
 class Especimen {
 public:
-    Especimen();
+    Especimen(std::vector<Transistor>& transistors, std::vector<Restriction>& restrictions
+            , std::vector<int>& indxTransRestr);
     Especimen(const Especimen& orig);
     virtual ~Especimen();
-    friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo,int maximo);
-    friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha);
-    friend void mutar(Especimen &individuo,int probabilidad);
+    
+    void greedInit();
+    int evaluate();
+    
+    friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int &minimo,int &maximo);
+    friend void cruceBlx(Especimen &padreA, Especimen &padreB,float &alpha);
+    friend void mutar(Especimen &individuo,int &probabilidad);
 private:
     std::vector<Transistor>& transistors_;
     std::vector<Restriction>& restrictions_;
+    
+   
     std::vector<int> freqs_;
     std::vector<int> indexes_;
+    std::vector<int>& indxTransRestr_;
+     
+    int bestFreq(int trans);
+    int calcCost(int trans, int freq);
     
     int totalInterference_;
 };
@@ -47,7 +58,7 @@ private:
  * @param minimo Numero minimo de elementos a intercambiar, 1 por defecto
  * @param maximo Numero maximo de elementos a intercambiar, 1/3 del vector por defecto
  */
-void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo=1,int maximo=0){
+void cruce2Puntos(Especimen &padreA, Especimen &padreB,int &minimo=1,int &maximo=0){
     if(maximo<=0)
         maximo=padreA.freqs_.size()/3;
     int puntoA=getRandomInt(0,padreA.freqs_.size()-1);  //posicion de inicio para los intercambios
@@ -73,7 +84,7 @@ void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo=1,int maximo=0
  * @param padreB Especimen padreB
  * @param alpha Porcentaje de reducción del intervalo. 0,5 por defecto
  */
-void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha=0.5){
+void cruceBlx(Especimen &padreA, Especimen &padreB,float &alpha=0.5){
     int transistor=getRandomInt(0,padreA.freqs_.size());
     
     int intervalo;
@@ -97,7 +108,7 @@ void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha=0.5){
  * @param individuo
  * @param probabilidad probabilidad de mutacion. 0.1 por defecto (1 = 100%)
  */
-void mutar(Especimen &individuo,int probabilidad=0.1){
+void mutar(Especimen &individuo,int &probabilidad=0.1){
     for(int i=0; i< individuo.freqs_.size();++i){
         if(getRandomInt(0,1)<= probabilidad){
             individuo.indexes_[i]=getRandomInt(0,individuo.indexes_.size()-1);

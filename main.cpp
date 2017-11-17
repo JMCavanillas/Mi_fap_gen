@@ -28,13 +28,17 @@ int main(int argc, char** argv) {
     Parser::TParse("instancias-modificadas/scen07/VAR.TXT", &freqs, transistors, equivalenceIndex, 1000);
     Parser::RTParse("instancias-modificadas/scen07/CTR.TXT", restrictions, equivalenceIndex);
     
-    for(int i = 0; i < restrictions.size(); ++i)
-    {
-        std::cout << restrictions[i].trans1 << " " << restrictions[i].trans2
-                << " " << restrictions[i].bound << " " << restrictions[i].interference
-                << std::endl;
-        
-    }
+    
+    std::vector<int> indxTransRest;
+    Parser::genIndexTransRestr(transistors, restrictions, indxTransRest);
+    
+//    for(int i = 0; i < restrictions.size(); ++i)
+//    {
+//        std::cout << i << " >> " << restrictions[i].trans1 << " " << restrictions[i].trans2
+//                << " " << restrictions[i].bound << " " << restrictions[i].interference
+//                << std::endl;
+//        
+//    }
 
     return 0;
 }
