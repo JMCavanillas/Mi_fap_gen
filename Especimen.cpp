@@ -68,7 +68,7 @@ int Especimen::calcCost(int trans, int freq)
     //    Calcula el coste de uno
     int k = indxTransRestr_[trans];
     int cost = 0;
-    while (indxTransRestr_[trans+1] < indxTransRestr_.size() || k != indxTransRestr_[trans+1]) 
+    while (trans+1 < indxTransRestr_.size() || k != indxTransRestr_[trans+1]) 
     {
         if( restrictions_[k].bound < std::abs(transistors_[trans][freq] -
                 freqs_[restrictions_[k].trans2]) )
