@@ -24,6 +24,7 @@
       <itemPath>Parser.cpp</itemPath>
       <itemPath>Population.cpp</itemPath>
       <itemPath>Random.cpp</itemPath>
+      <itemPath>Search.cpp</itemPath>
       <itemPath>Transistor.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>specimen.cpp</itemPath>
@@ -68,6 +69,8 @@
       <item path="Random.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Restriction.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Search.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Search.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -119,6 +122,8 @@
       <item path="Random.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Restriction.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Search.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Search.hpp" ex="false" tool="3" flavor2="0">
       </item>

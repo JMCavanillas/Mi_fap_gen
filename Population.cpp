@@ -9,10 +9,11 @@
 
 Population::Population(std::vector<Transistor>& transistors,
         std::vector<Restriction>& restrictions, 
+        std::vector<int>& indxTransRestr,
         SelectionModel* selectionModel, MixOperator* mixOperator) : 
         transistors_(transistors), restrictions_(restrictions), 
         selectionModel_(selectionModel), mixOperator_(mixOperator),
-        evalNum_(0)
+        indxTransRestr_(indxTransRestr), evalNum_(0)
 {
 
 }
@@ -20,7 +21,8 @@ Population::Population(std::vector<Transistor>& transistors,
 Population::Population(const Population& orig) :         
         transistors_(orig.transistors_), restrictions_(orig.restrictions_), 
         population_(orig.population_), candidates_(orig.candidates_),
-        selectionModel_(orig.selectionModel_), mixOperator_(orig.mixOperator_)
+        selectionModel_(orig.selectionModel_), mixOperator_(orig.mixOperator_),
+        indxTransRestr_(orig.indxTransRestr_), evalNum_(orig.evalNum_)
 {
     
 }

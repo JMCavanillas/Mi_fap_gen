@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Parser.o \
 	${OBJECTDIR}/Population.o \
 	${OBJECTDIR}/Random.o \
+	${OBJECTDIR}/Search.o \
 	${OBJECTDIR}/Transistor.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/specimen.o
@@ -81,6 +82,11 @@ ${OBJECTDIR}/Random.o: Random.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Random.o Random.cpp
+
+${OBJECTDIR}/Search.o: Search.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Search.o Search.cpp
 
 ${OBJECTDIR}/Transistor.o: Transistor.cpp
 	${MKDIR} -p ${OBJECTDIR}

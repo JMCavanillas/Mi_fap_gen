@@ -24,6 +24,7 @@ private:
     
     std::vector<Transistor>& transistors_;
     std::vector<Restriction>& restrictions_;
+    std::vector<int>& indxTransRestr_;
     
     std::vector<Specimen> population_;
     std::vector<Specimen> candidates_;
@@ -34,6 +35,7 @@ private:
 public:
     Population(std::vector<Transistor>& transistors, 
                 std::vector<Restriction>& restrictions,
+                std::vector<int>& indxTransRestr,
                 SelectionModel* selectionModel, MixOperator* mixOperator);
     Population(const Population& orig);
     virtual ~Population();

@@ -30,7 +30,7 @@ void Transistor::setFrecs(std::vector<std::vector<int>>* freqs)
 
 int Transistor::operator[](unsigned indx)
 {
-    return (*freqs_)[NRange_][indx];
+    return (*freqs_)[NRange_][indx%getFreqRange()];
 }
 
 int Transistor::getNumID()
