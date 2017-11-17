@@ -127,6 +127,7 @@ int Parser::RTParse(std::string path, std::vector<Restriction>& restrictions,
 
         restrictions.push_back(aux);
     }
+}
 void Parser::genIndexTransRestr(std::vector<Transistor>& transistors_, 
                 std::vector<Restriction>& restrictions_, std::vector<int>& result)
 {
@@ -138,5 +139,4 @@ void Parser::genIndexTransRestr(std::vector<Transistor>& transistors_,
             ++k;
         
     }
-}
 }
