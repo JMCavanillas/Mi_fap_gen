@@ -58,6 +58,11 @@ void Especimen::greedInit()
             
         ++k;
     }
+    
+//    for(int i = 0; i < freqs_.size() ; ++i)
+//        std::cout << freqs_[i] << " " ;
+//
+//    std::cout << std::endl;
 }
 
 int Especimen::bestFreq(int trans)
@@ -84,7 +89,7 @@ int Especimen::calcCost(int trans, int freq)
     //    Calcula el coste de uno
     int k = indxTransRestr_[trans];
     int cost = 0;
-    if ( indxTransRestr_[trans+1] < indxTransRestr_.size())
+    if ( trans+1 < indxTransRestr_.size())
     {
         while (k != indxTransRestr_[trans+1]) 
         {
