@@ -35,13 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/AlgoritmosGeneticos.o \
+	${OBJECTDIR}/Especimen.o \
 	${OBJECTDIR}/Parser.o \
-	${OBJECTDIR}/Population.o \
+	${OBJECTDIR}/Poblacion.o \
 	${OBJECTDIR}/Random.o \
-	${OBJECTDIR}/Search.o \
 	${OBJECTDIR}/Transistor.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/specimen.o
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -68,25 +68,30 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mi_fap_gen: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mi_fap_gen ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/AlgoritmosGeneticos.o: AlgoritmosGeneticos.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AlgoritmosGeneticos.o AlgoritmosGeneticos.cpp
+
+${OBJECTDIR}/Especimen.o: Especimen.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Especimen.o Especimen.cpp
+
 ${OBJECTDIR}/Parser.o: Parser.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Parser.o Parser.cpp
 
-${OBJECTDIR}/Population.o: Population.cpp
+${OBJECTDIR}/Poblacion.o: Poblacion.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Population.o Population.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Poblacion.o Poblacion.cpp
 
 ${OBJECTDIR}/Random.o: Random.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Random.o Random.cpp
-
-${OBJECTDIR}/Search.o: Search.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Search.o Search.cpp
 
 ${OBJECTDIR}/Transistor.o: Transistor.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -97,11 +102,6 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/specimen.o: specimen.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/specimen.o specimen.cpp
 
 # Subprojects
 .build-subprojects:

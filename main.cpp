@@ -10,6 +10,7 @@
 #include "Parser.hpp"
 #include "Restriction.hpp"
 #include "Random.hpp"
+#include "Especimen.hpp"
 using namespace std;
 
 /*
@@ -31,6 +32,9 @@ int main(int argc, char** argv) {
     
     std::vector<int> indxTransRest;
     Parser::genIndexTransRestr(transistors, restrictions, indxTransRest);
+    Especimen mockesp(transistors, restrictions, indxTransRest);
+    mockesp.greedInit();
+    
     
 //    for(int i = 0; i < restrictions.size(); ++i)
 //    {
@@ -39,7 +43,14 @@ int main(int argc, char** argv) {
 //                << std::endl;
 //        
 //    }
-
+//      for(int i = 0; i < indxTransRest.size(); ++i)
+//    {
+//        std::cout << i << " >> " << indxTransRest[i]
+//                << std::endl;
+//        
+//    }
+    
+    
     return 0;
 }
 

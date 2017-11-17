@@ -41,6 +41,7 @@ void Especimen::greedInit()
 {
     int k = 0;
     int limit = getRandomInt(transistors_.size()/3, transistors_.size()-1);
+    indexes_.resize(transistors_.size());
     freqs_.resize(transistors_.size());
     for(int i = transistors_.size()-1; i >= 0; --i )
     {
@@ -50,17 +51,32 @@ void Especimen::greedInit()
             freqs_[i] = transistors_[i][indexes_[i]];
         }
         else
-            freqs_[i] = bestFreq(i);
-        
+        {
+            indexes_[i] = bestFreq(i);
+            freqs_[i] = transistors_[i][indexes_[i]];
+        }
+            
         ++k;
     }
 }
 
 int Especimen::bestFreq(int trans)
 {
-
-
-
+    int minimo=INT_MAX;
+    int frecMin=-1;
+    int rango = transistors_[trans].getFreqRange();
+    for(int i = 0; i < rango ; ++i)
+    {
+        int coste =calcCost(trans,i);
+        if(minimo > coste)
+        {
+            minimo = coste;
+            frecMin=i;
+        }
+        if(!minimo)
+            break;
+    }
+    return frecMin;
 }
 
 int Especimen::calcCost(int trans, int freq)
@@ -68,12 +84,15 @@ int Especimen::calcCost(int trans, int freq)
     //    Calcula el coste de uno
     int k = indxTransRestr_[trans];
     int cost = 0;
-    while (indxTransRestr_[trans+1] < indxTransRestr_.size() || k != indxTransRestr_[trans+1]) 
+    if ( indxTransRestr_[trans+1] < indxTransRestr_.size())
     {
-        if( restrictions_[k].bound < std::abs(transistors_[trans][freq] -
-                freqs_[restrictions_[k].trans2]) )
-            cost += restrictions_[k].interference;
-        ++k;
+        while (k != indxTransRestr_[trans+1]) 
+        {
+            if( restrictions_[k].bound < std::abs(transistors_[trans][freq] -
+                    freqs_[restrictions_[k].trans2]) )
+                cost += restrictions_[k].interference;
+            ++k;
+        }
     }
     return cost;
 }

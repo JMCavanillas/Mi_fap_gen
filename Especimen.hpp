@@ -17,6 +17,7 @@
 #include "Restriction.hpp"
 #include "Transistor.hpp"
 #include "Random.hpp"
+#include <climits>
 
 class Especimen {
 public:
