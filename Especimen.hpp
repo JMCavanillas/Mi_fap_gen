@@ -29,6 +29,8 @@ public:
     void greedInit();
     int evaluate();
     
+    bool operator== (Especimen& Otro);
+    
     friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo,int maximo);
     friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha);
     friend void mutar(Especimen &individuo,int probabilidad);

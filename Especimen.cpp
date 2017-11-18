@@ -101,6 +101,24 @@ int Especimen::calcCost(int trans, int freq)
     }
     return cost;
 }
+
+/**
+ * Compara 2 Especimenes, 1º mira si tienen la misma interferencia y luego si tienen la mismas frecuencias
+ * @param Otro
+ * @return 
+ */
+bool Especimen::operator==(Especimen& otro) {
+    
+    if(this->totalInterference_==otro.totalInterference_){
+        for(int i = 0; i< this->freqs_.size();++i)
+            if(this->freqs_[i]!=otro.freqs_[i])
+                return false;
+    }else
+        return false;
+    return true;
+}
+
+
 Especimen::~Especimen() 
 {
 }
