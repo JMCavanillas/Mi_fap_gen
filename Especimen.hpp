@@ -29,7 +29,10 @@ public:
     void greedInit();
     int evaluate();
     
-    bool operator== (Especimen& Otro);
+    bool operator== (Especimen& otro);
+    bool operator!= (Especimen& otro);
+    
+    int getInterference();
     
     friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo,int maximo);
     friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha);

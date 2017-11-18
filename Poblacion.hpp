@@ -16,23 +16,41 @@
 
 #include "Especimen.hpp"
 #include "AlgoritmosGeneticos.hpp"
+#include "Random.hpp"
 #include <vector>
 #include <list>
 
 class Poblacion {
 public:
-    Poblacion();
+    Poblacion(
+            std::vector<Transistor>& transistors, 
+            std::vector<Restriction> restrictions, 
+            std::vector<int> indxTransRestr
+            );
+    
     Poblacion(const Poblacion& orig);
     
     void iniciarPoblacion();
+    void evolucionEstacionaria(int tipoCruce);
+    void evolucionGeneracional(double probabilidad, int tipoCruce);
+    
+    double comprobarRepetidos();
+    
+    int getMejor();
     
     virtual ~Poblacion();
     
     
 private:
-    std::vector<Especimen> Mundo;
     
-    Transistor* 
+    int mejor_;
+    
+    std::vector<Especimen>* mundo_;
+    
+    Transistor& transistors_;
+    std::vector<Restriction>& restrictions_;
+    std::vector<int>& indxTransRestr_;
+    
 };
 
 #endif /* POBLACION_HPP */
