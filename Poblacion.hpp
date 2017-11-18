@@ -19,6 +19,7 @@
 #include "Random.hpp"
 #include <vector>
 #include <list>
+#include <set>
 
 class Poblacion {
 public:
@@ -36,7 +37,7 @@ public:
     
     double comprobarRepetidos();
     
-    int getMejor();
+    Especimen getMejor();
     
     virtual ~Poblacion();
     

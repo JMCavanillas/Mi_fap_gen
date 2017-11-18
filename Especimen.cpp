@@ -19,6 +19,8 @@ Especimen::Especimen(std::vector<Transistor>& transistors, std::vector<Restricti
                     transistors_(transistors), restrictions_(restrictions), 
                     indxTransRestr_(indxTransRestr)
 {
+    greedInit();
+    evaluate();
 }
 
 Especimen::Especimen(const Especimen& orig) :

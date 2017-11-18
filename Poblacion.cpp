@@ -36,6 +36,21 @@ Poblacion::~Poblacion()
 }
 
 
+void Poblacion::iniciarPoblacion(int nIndividuos)
+{
+    int vMejor = INT_MAX;
+    for(int i = 0; i < nIndividuos; ++i)
+    {
+        Especimen nuevoEsp(transistors_, restrictions_, indxTransRestr_);
+        (*mundo_).push_back(nuevoEsp);
+        if(vMejor > nuevoEsp.getInterference())
+        {
+            mejor_ = i;
+            vMejor = nuevoEsp.getInterference();
+        }
+    }
+}
+
 void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
 {
     // Inicializamos hijos y lista de candidatos
@@ -45,7 +60,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
     std::vector<int> candidatos;
     
     // Calculamos esperanza Matematica
-    int numCandidatos = (int)(mundo_.size()*probabilidad);
+    int numCandidatos = (int)(mundo_->size()*probabilidad);
     
     if(!numCandidatos)
         return; 
@@ -67,7 +82,10 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
     
     // Cruzamos los candidatos
     for (int i = 0; i < numCandidatos; i +=2 )
-        cruceBlx( (*hijos) [ candidatos[i] ] , (*hijos) [ candidatos[i+1] ] );
+        if(tipoCruce == 0)
+            cruceBlx( (*hijos) [ candidatos[i] ] , (*hijos) [ candidatos[i+1] ] );
+        else (tipoCruce == 1)
+            cruce2Puntos( (*hijos) [ candidatos[i] ] , (*hijos) [ candidatos[i+1] ] );
     
     // Evaluamos los que Hayamos cruzado
     for(int i = 0; i < numCandidatos; ++i)
@@ -116,4 +134,50 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
         }
     
     mejor_ = mejor;
+}
+
+void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1) 
+{
+    // Inicializamos hijos
+    std::vector<Especimen> hijos;
+    
+    // Seleccionamos hijos al azar
+    for(int i = 0; i < parejas*2; ++i)
+    {
+        int candidato = getRandomInt(0, mundo_->size()-1);
+        hijos.push_back( (*mundo_)[candidato] );
+    }
+    
+    // Cruzamos los candidatos
+    for (int i = 0; i < hijos.size(); i +=2 )
+        if(tipoCruce == 0)
+            cruceBlx( hijos [i] , hijos [i+1] );
+        else (tipoCruce == 1)
+            cruce2Puntos( hijos [i] , hijos [i+1] );
+    
+    // Buscamos los N peores y reemplazamos
+    std::set<int> vistos;
+    for(int i = 0; i < hijos.size(); ++i)
+    {
+        int peor = 0;
+        int vPeor = -1;
+        for(int j = 0; j < mundo_->size(); ++j)
+            if( vPeor < (*hijos)[j].getInterference() && vistos.find(j) == vistos.end())
+            {
+                vPeor = (*hijos)[j].getInterference();
+                peor = j;
+            }
+        
+        vistos.insert(peor);
+        
+        if((*mundo_)[peor].getInterference() > hijos[i].getInterference())
+            (*mundo_)[peor] = hijos[i];
+    }
+    
+}
+
+
+Especimen Poblacion::getMejor()
+{
+    return (*mundo_)[mejor_];
 }
