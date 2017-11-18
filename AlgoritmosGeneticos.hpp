@@ -18,14 +18,18 @@
 
 /**
  * Algoritmo genético generacional con elitismo
- * @param poblacion         
- * @param evaluaciones
- * @param generaciones
- * @param cruce
- * @param mutacion
+ * @param nIndividuos       Numero de individuos de la poblacion con la que ejecutar el algoritmo
+ * @param evaluaciones      Numero de evaluaciones de los individuos
+ * @param generaciones      Numero de generaciones maximas //no en uso
+ * @param cruce             Probabilidad de Cruce
+ * @param tipo              Tipo de cruce, 0 = BLX 1 = 2 Puntos
+ * @param mutacion          Probabilidad de mutación
  * @return 
  */
-int geneticoGeneracional(int poblacion,int evaluaciones,int generaciones,int cruce, int mutacion);
+int geneticoGeneracional(int nIndividuos,int evaluaciones,int generaciones,int cruce,int tipo,int mutacion);
+
+
+int geneticoEstacionario(int nIndividuos,int evaluaciones,int generaciones,int cruce,int tipo,int mutacion);
 
 #endif /* ALGORITMOSGENETICOS_HPP */
 
