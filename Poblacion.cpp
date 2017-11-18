@@ -155,10 +155,14 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1)
         else (tipoCruce == 1)
             cruce2Puntos( hijos [i] , hijos [i+1] );
     
+    // Evaluamos
+    for (int i = 0; i < hijos.size(); ++i)
+        hijos[i].evaluate();
+    
     // Buscamos los N peores y reemplazamos
     std::set<int> vistos;
     for(int i = 0; i < hijos.size(); ++i)
-    {
+    { 
         int peor = 0;
         int vPeor = -1;
         for(int j = 0; j < mundo_->size(); ++j)
@@ -169,6 +173,11 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1)
             }
         
         vistos.insert(peor);
+        
+        // Comprobamos si es el mejor hasta el momento y si lo es lo colocamos en
+        // el sitio que este piensa ocupar. El del que antes era el peor
+        if ( (*mundo_)[mejor_].getInterference() > hijos[i].getInterference())
+            mejor_ = peor; 
         
         if((*mundo_)[peor].getInterference() > hijos[i].getInterference())
             (*mundo_)[peor] = hijos[i];
