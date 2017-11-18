@@ -15,17 +15,24 @@
 #define POBLACION_HPP
 
 #include "Especimen.hpp"
+#include "AlgoritmosGeneticos.hpp"
 #include <vector>
+#include <list>
 
 class Poblacion {
 public:
     Poblacion();
     Poblacion(const Poblacion& orig);
+    
+    void iniciarPoblacion();
+    
     virtual ~Poblacion();
     
     
 private:
     std::vector<Especimen> Mundo;
+    
+    Transistor* 
 };
 
 #endif /* POBLACION_HPP */

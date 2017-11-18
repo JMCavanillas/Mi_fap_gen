@@ -12,7 +12,7 @@ int geneticoGeneracional(int nIndividuos,int evaluaciones,int generaciones,int c
     
     while(evaluaciones >= 0){
         
-        entorno.cruzeGeneracional(cruce,tipo);
+        entorno.cruceGeneracional(cruce,tipo);
         entorno.mutar(mutacion);
         
         if(entorno.evaluar==1)
@@ -29,7 +29,7 @@ int geneticoEstacionario(int nIndividuos,int evaluaciones,int generaciones,int c
     
     while(evaluaciones >= 0){
         
-        entorno.cruzeEstacionario(cruce,tipo);
+        entorno.cruceEstacionario(cruce,tipo);
         entorno.mutar(mutacion);
         
         if(entorno.evaluar==1)
