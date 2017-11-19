@@ -147,7 +147,7 @@ bool Especimen::operator==(Especimen& otro) {
     return true;
 }
 
-bool Especimen::operator !=(Especimen& otro)
+bool Especimen::operator!=(Especimen& otro)
 {
     if(this->totalInterference_==otro.totalInterference_){
     for(int i = 0; i< this->freqs_.size();++i)
@@ -159,6 +159,18 @@ bool Especimen::operator !=(Especimen& otro)
     return false;
 }
 
+bool Especimen::operator<(Especimen& otro){
+    if(totalInterference_<otro.totalInterference_)
+    return true;
+    else
+        if(totalInterference_>otro.totalInterference_)
+            return false;
+        else
+        for(int i = 0; i< freqs_.size();++i)
+            if(freqs_[i]<otro.freqs_[i])
+                return true;
+        return false;
+}
 /**
  * Retorna interferencia
  * @return int 

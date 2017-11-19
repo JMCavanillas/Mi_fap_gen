@@ -56,7 +56,7 @@ void Poblacion::iniciarPoblacion(int nIndividuos)
         Especimen nuevoEsp( transistors_ , restrictions_, indxTransRestr_);
         mundo_->push_back(nuevoEsp);
         if(vMejor > nuevoEsp.getInterference())
-        {
+        {   
             mejor_ = i;
             vMejor = nuevoEsp.getInterference();
         }
@@ -222,6 +222,35 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, double pMutacion, int parej
     
 }
 
+
+bool Poblacion::comprobarRepetidos(){
+    
+}
+
+/**
+ * Reinicializa la población conservando del mejor elemento previo
+ */
+void Poblacion::reinicializar(){
+    Especimen ejemplar=(*mundo_)[mejor_];
+    
+    int nIndividuos=mundo_->size();
+    mundo_->clear();
+    
+    mejor_=0;
+    (*mundo_)[0]=ejemplar;
+    
+    int vMejor=ejemplar.getInterference();
+    for(int i = 0; i < nIndividuos; ++i)
+    {
+        Especimen nuevoEsp( transistors_ , restrictions_, indxTransRestr_);
+        mundo_->push_back(nuevoEsp);
+        if(vMejor > nuevoEsp.getInterference())
+        {   
+            mejor_ = i;
+            vMejor = nuevoEsp.getInterference();
+        }
+    }
+}
 /**
  * Retorna el mejor individuo de la población
  * @return Especimen

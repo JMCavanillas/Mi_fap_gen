@@ -9,7 +9,6 @@
 #define POBLACION_HPP
 
 #include "Especimen.hpp"
-#include "AlgoritmosGeneticos.hpp"
 #include "Random.hpp"
 #include <vector>
 #include <list>
@@ -29,7 +28,9 @@ public:
     void evolucionEstacionaria(int tipoCruce, double pMutacion = 0.1, int parejas = 1);
     void evolucionGeneracional(double probabilidad, int tipoCruce, double pMutacion = 0.1);
     
-    double comprobarRepetidos();
+    bool comprobarRepetidos();
+    
+    void reinicializar();
     
     Especimen getMejor();
     

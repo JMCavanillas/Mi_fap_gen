@@ -27,6 +27,7 @@ public:
     
     bool operator== (Especimen& otro);
     bool operator!= (Especimen& otro);
+    bool operator< (Especimen& otro);
     
     int getInterference();
     
