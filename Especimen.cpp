@@ -30,7 +30,8 @@ Especimen::Especimen(std::vector<Transistor>* transistors, std::vector<Restricti
  */
 Especimen::Especimen(const Especimen& orig) :
                     transistors_(orig.transistors_), restrictions_(orig.restrictions_),
-                    indexes_(orig.indexes_), freqs_(orig.freqs_), indxTransRestr_(orig.indxTransRestr_)
+                    indexes_(orig.indexes_), freqs_(orig.freqs_), indxTransRestr_(orig.indxTransRestr_),
+                    totalInterference_(orig.totalInterference_)
 {
 }
 

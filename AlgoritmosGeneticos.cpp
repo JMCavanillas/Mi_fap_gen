@@ -1,5 +1,5 @@
 
-#include "AlgoritmosGeneticos.hpp"
+//#include "AlgoritmosGeneticos.hpp"
 //
 //int geneticoGeneracional(int nIndividuos,int evaluaciones,Poblacion& entorno,int cruce,int tipo,int mutacion){
 //    

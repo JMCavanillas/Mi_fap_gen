@@ -54,7 +54,7 @@ void Poblacion::iniciarPoblacion(int nIndividuos)
     for(int i = 0; i < nIndividuos; ++i)
     {
         Especimen nuevoEsp( transistors_ , restrictions_, indxTransRestr_);
-        (*mundo_).push_back(nuevoEsp);
+        mundo_->push_back(nuevoEsp);
         if(vMejor > nuevoEsp.getInterference())
         {
             mejor_ = i;

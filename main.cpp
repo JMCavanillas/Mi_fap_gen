@@ -11,6 +11,7 @@
 #include "Restriction.hpp"
 #include "Random.hpp"
 #include "Especimen.hpp"
+#include "Poblacion.hpp"
 using namespace std;
 
 /*
@@ -18,7 +19,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     
-    int seed = 687685;
+    int seed = 77377914; // 687685
     std::srand(seed);
     std::vector<Restriction> restrictions;
     std::vector<std::vector<int>> freqs;
@@ -32,9 +33,19 @@ int main(int argc, char** argv) {
     
     std::vector<int> indxTransRest;
     Parser::genIndexTransRestr(transistors, restrictions, indxTransRest);
-    Especimen mockesp(&transistors, &restrictions, &indxTransRest);
-    mockesp.greedInit();
     
+    Poblacion poblacionActual(&transistors, &restrictions, &indxTransRest);
+    poblacionActual.iniciarPoblacion(50);
+    for (int i = 0; i < 20000; ++i)
+    {
+        poblacionActual.evolucionGeneracional(0.7, 0);
+    }
+    
+    Especimen mejor = poblacionActual.getMejor();
+    std::cout << mejor.getInterference();
+//    Especimen greedy(&transistors, &restrictions, &indxTransRest);
+//    
+//    std::cout << greedy.getInterference();
     
 //    for(int i = 0; i < restrictions.size(); ++i)
 //    {
