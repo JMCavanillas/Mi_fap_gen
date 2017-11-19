@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
     
     std::vector<int> indxTransRest;
     Parser::genIndexTransRestr(transistors, restrictions, indxTransRest);
-    Especimen mockesp(transistors, restrictions, indxTransRest);
+    Especimen mockesp(&transistors, &restrictions, &indxTransRest);
     mockesp.greedInit();
     
     

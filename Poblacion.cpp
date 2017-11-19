@@ -14,9 +14,9 @@
  * @param restrictions  Conjunto de restricciones que rigen la población
  * @param indxTransRestr    Indice que indica la posición de cada transistor en el conjunto de restricciones
  */
-Poblacion::Poblacion(std::vector<Transistor>& transistors, 
-        std::vector<Restriction> restrictions, 
-        std::vector<int> indxTransRestr)    : transistors_(transistors), 
+Poblacion::Poblacion(std::vector<Transistor>* transistors, 
+        std::vector<Restriction>* restrictions, 
+        std::vector<int>* indxTransRestr)    : transistors_(transistors), 
         restrictions_(restrictions), indxTransRestr_(indxTransRestr)
 {
     mejor_ = 0;
@@ -29,7 +29,7 @@ Poblacion::Poblacion(std::vector<Transistor>& transistors,
  * @param orig
  */
 Poblacion::Poblacion(const Poblacion& orig)     : transistors_(orig.transistors_),
-        restrictions_(orig.transistors_), indxTransRestr_(orig.indxTransRestr_),
+        restrictions_(orig.restrictions_), indxTransRestr_(orig.indxTransRestr_),
         mejor_(orig.mejor_)
 {
     mundo_ = new std::vector<Especimen>;
@@ -53,7 +53,7 @@ void Poblacion::iniciarPoblacion(int nIndividuos)
     int vMejor = INT_MAX;
     for(int i = 0; i < nIndividuos; ++i)
     {
-        Especimen nuevoEsp(transistors_, restrictions_, indxTransRestr_);
+        Especimen nuevoEsp( transistors_ , restrictions_, indxTransRestr_);
         (*mundo_).push_back(nuevoEsp);
         if(vMejor > nuevoEsp.getInterference())
         {
@@ -85,7 +85,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
     if(numCandidatos%2 != 0) ++numCandidatos;
     
     // Seleccionamos por Torneo Binario
-    candidatos.reserve(candidatos);
+    candidatos.reserve(numCandidatos);
     for(int i = 0; i < numCandidatos; ++i)
     {
         int candidato1 = getRandomInt(0, mundo_->size()-1);
@@ -101,7 +101,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
     for (int i = 0; i < numCandidatos; i +=2 )
         if(tipoCruce == 0)
             cruceBlx( (*hijos) [ candidatos[i] ] , (*hijos) [ candidatos[i+1] ] );
-        else (tipoCruce == 1)
+        else if (tipoCruce == 1)
             cruce2Puntos( (*hijos) [ candidatos[i] ] , (*hijos) [ candidatos[i+1] ] );
     
     // Evaluamos los que Hayamos cruzado
@@ -174,7 +174,7 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1)
     for (int i = 0; i < hijos.size(); i +=2 )
         if(tipoCruce == 0)
             cruceBlx( hijos [i] , hijos [i+1] );
-        else (tipoCruce == 1)
+        else if (tipoCruce == 1)
             cruce2Puntos( hijos [i] , hijos [i+1] );
     
     // Evaluamos
@@ -188,9 +188,9 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1)
         int peor = 0;
         int vPeor = -1;
         for(int j = 0; j < mundo_->size(); ++j)
-            if( vPeor < (*hijos)[j].getInterference() && vistos.find(j) == vistos.end())
+            if( vPeor < hijos[j].getInterference() && vistos.find(j) == vistos.end())
             {
-                vPeor = (*hijos)[j].getInterference();
+                vPeor = hijos[j].getInterference();
                 peor = j;
             }
         

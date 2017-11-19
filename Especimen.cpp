@@ -14,8 +14,8 @@
  * @param restrictions  Conjunto de restricciones que rigen la población
  * @param indxTransRestr    Indice que indica la posición de cada transistor en el conjunto de restricciones
  */
-Especimen::Especimen(std::vector<Transistor>& transistors, std::vector<Restriction>& restrictions,
-        std::vector<int>& indxTransRestr) :
+Especimen::Especimen(std::vector<Transistor>* transistors, std::vector<Restriction>* restrictions,
+        std::vector<int>* indxTransRestr) :
                     transistors_(transistors), restrictions_(restrictions), 
                     indxTransRestr_(indxTransRestr)
 {
@@ -41,10 +41,10 @@ Especimen::Especimen(const Especimen& orig) :
 int Especimen::evaluate()
 {
     totalInterference_ = 0;
-    for (int i = 0; i < restrictions_.size(); ++i)
-        if ( restrictions_[i].bound < 
-                std::abs(freqs_[restrictions_[i].trans1] - freqs_[restrictions_[i].trans2]) )
-            totalInterference_ += restrictions_[i].interference;
+    for (int i = 0; i < restrictions_->size(); ++i)
+        if ( (*restrictions_)[i].bound < 
+                std::abs(freqs_[ (*restrictions_)[i].trans1] - freqs_[ (*restrictions_)[i].trans2]) )
+            totalInterference_ += (*restrictions_)[i].interference;
     
 }
 
@@ -54,20 +54,20 @@ int Especimen::evaluate()
 void Especimen::greedInit()
 {
     int k = 0;
-    int limit = getRandomInt(transistors_.size()/3, transistors_.size()-1);
-    indexes_.resize(transistors_.size());
-    freqs_.resize(transistors_.size());
-    for(int i = transistors_.size()-1; i >= 0; --i )
+    int limit = getRandomInt(transistors_->size()/3, transistors_->size()-1);
+    indexes_.resize(transistors_->size());
+    freqs_.resize(transistors_->size());
+    for(int i = transistors_->size()-1; i >= 0; --i )
     {
         if(k < limit)
         {
-            indexes_[i] = transistors_[i].getRandFrec();
-            freqs_[i] = transistors_[i][indexes_[i]];
+            indexes_[i] = (*transistors_)[i].getRandFrec();
+            freqs_[i] = (*transistors_)[i][indexes_[i]];
         }
         else
         {
             indexes_[i] = bestFreq(i);
-            freqs_[i] = transistors_[i][indexes_[i]];
+            freqs_[i] = (*transistors_)[i][indexes_[i]];
         }
             
         ++k;
@@ -89,7 +89,7 @@ int Especimen::bestFreq(int trans)
 {
     int minimo=INT_MAX;
     int frecMin=-1;
-    int rango = transistors_[trans].getFreqRange();
+    int rango = (*transistors_)[trans].getFreqRange();
     for(int i = 0; i < rango ; ++i)
     {
         int coste =calcCost(trans,i);
@@ -114,15 +114,15 @@ int Especimen::bestFreq(int trans)
 int Especimen::calcCost(int trans, int freq)
 {
     //    Calcula el coste de uno
-    int k = indxTransRestr_[trans];
+    int k = (*indxTransRestr_)[trans];
     int cost = 0;
-    if ( trans+1 < indxTransRestr_.size())
+    if ( trans+1 < (*indxTransRestr_).size())
     {
-        while (k != indxTransRestr_[trans+1]) 
+        while (k != (*indxTransRestr_)[trans+1]) 
         {
-            if( restrictions_[k].bound < std::abs(transistors_[trans][freq] -
-                    freqs_[restrictions_[k].trans2]) )
-                cost += restrictions_[k].interference;
+            if( (*restrictions_)[k].bound < std::abs((*transistors_)[trans][freq] -
+                    freqs_[(*restrictions_)[k].trans2]) )
+                cost += (*restrictions_)[k].interference;
             ++k;
         }
     }
@@ -183,7 +183,7 @@ Especimen::~Especimen()
  * @param minimo Numero minimo de elementos a intercambiar, 1 por defecto
  * @param maximo Numero maximo de elementos a intercambiar, 1/3 del vector por defecto
  */
-void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo=1,int maximo=0){
+void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo,int maximo){
     if(maximo<=0)
         maximo=padreA.freqs_.size()/3;
     int puntoA=getRandomInt(0,padreA.freqs_.size()-1);  //posicion de inicio para los intercambios
@@ -209,7 +209,7 @@ void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo=1,int maximo=0
  * @param padreB Especimen padreB
  * @param alpha Porcentaje de reducción del intervalo. 0,5 por defecto
  */
-void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha=0.5){
+void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha){
     int transistor=getRandomInt(0,padreA.freqs_.size());
     
     int intervalo;
@@ -224,8 +224,8 @@ void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha=0.5){
             padreB.indexes_[transistor]-=getRandomInt(0,intervalo*alpha);
             padreA.indexes_[transistor]+=getRandomInt(0,intervalo*alpha);
         }
-    padreA.freqs_[transistor]=padreA.transistors_[transistor][padreA.indexes_[transistor]];
-    padreB.freqs_[transistor]=padreB.transistors_[transistor][padreB.indexes_[transistor]];
+    padreA.freqs_[transistor]=(*padreA.transistors_) [transistor][padreA.indexes_[transistor]];
+    padreB.freqs_[transistor]=(*padreB.transistors_) [transistor][padreB.indexes_[transistor]];
 }
 
 /**
@@ -233,11 +233,11 @@ void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha=0.5){
  * @param individuo
  * @param probabilidad probabilidad de mutacion. 0.1 por defecto (1 = 100%)
  */
-void mutar(Especimen &individuo,int probabilidad=0.1){
+void mutar(Especimen &individuo,int probabilidad){
     for(int i=0; i< individuo.freqs_.size();++i){
         if(getRandomInt(0,1)<= probabilidad){
             individuo.indexes_[i]=getRandomInt(0,individuo.indexes_.size()-1);
-            individuo.freqs_[i]=individuo.transistors_[i][individuo.indexes_[i]];
+            individuo.freqs_[i]=(*individuo.transistors_) [i][individuo.indexes_[i]];
         }
     }
 }

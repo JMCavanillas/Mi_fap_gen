@@ -9,6 +9,8 @@
 #ifndef ALGORITMOSGENETICOS_HPP
 #define ALGORITMOSGENETICOS_HPP
 
+#include "Poblacion.hpp"
+
 enum Cruce {
     blx, en2Puntos
 };

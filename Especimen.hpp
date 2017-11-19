@@ -11,12 +11,14 @@
 #include "Restriction.hpp"
 #include "Transistor.hpp"
 #include "Random.hpp"
+#include <vector>
 #include <climits>
 
 class Especimen {
 public:
-    Especimen(std::vector<Transistor>& transistors, std::vector<Restriction>& restrictions
-            , std::vector<int>& indxTransRestr);
+    Especimen( std::vector<Transistor>* transistors, 
+            std::vector<Restriction>* restrictions,
+            std::vector<int>* indxTransRestr );
     Especimen(const Especimen& orig);
     virtual ~Especimen();
     
@@ -28,17 +30,17 @@ public:
     
     int getInterference();
     
-    friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo,int maximo);
-    friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha);
-    friend void mutar(Especimen &individuo,int probabilidad);
+    friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo = 1,int maximo = 0);
+    friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha = 0.5);
+    friend void mutar(Especimen &individuo,int probabilidad = 0.1);
 private:
-    std::vector<Transistor>& transistors_;
-    std::vector<Restriction>& restrictions_;
+    std::vector<Transistor>* transistors_;
+    std::vector<Restriction>* restrictions_;
     
    
     std::vector<int> freqs_;
     std::vector<int> indexes_;
-    std::vector<int>& indxTransRestr_;
+    std::vector<int>* indxTransRestr_;
      
     int bestFreq(int trans);
     int calcCost(int trans, int freq);

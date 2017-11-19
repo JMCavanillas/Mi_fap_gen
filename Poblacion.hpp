@@ -18,15 +18,15 @@
 class Poblacion {
 public:
     Poblacion(
-            std::vector<Transistor>& transistors, 
-            std::vector<Restriction> restrictions, 
-            std::vector<int> indxTransRestr
+            std::vector<Transistor>* transistors, 
+            std::vector<Restriction>* restrictions, 
+            std::vector<int>* indxTransRestr
             );
     
     Poblacion(const Poblacion& orig);
     
-    void iniciarPoblacion();
-    void evolucionEstacionaria(int tipoCruce);
+    void iniciarPoblacion(int nIndividuos);
+    void evolucionEstacionaria(int tipoCruce, int parejas);
     void evolucionGeneracional(double probabilidad, int tipoCruce);
     
     double comprobarRepetidos();
@@ -42,9 +42,9 @@ private:
     
     std::vector<Especimen>* mundo_;
     
-    Transistor& transistors_;
-    std::vector<Restriction>& restrictions_;
-    std::vector<int>& indxTransRestr_;
+    std::vector<Transistor>* transistors_;
+    std::vector<Restriction>* restrictions_;
+    std::vector<int>* indxTransRestr_;
     
 };
 
