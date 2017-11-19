@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 #include "Random.hpp"
 
-
+/**
+ * Genera un entero comprendido entre dos números, siendo ambos incluidos dentro del rango
+ * @param inferior  Límite inferior (intervalo cerrado)
+ * @param superior  Límite superior (intervalo cerrado)
+ * @return int
+ */
 int getRandomInt(int inferior, int superior){
     int aleatorio= inferior + rand()%(superior-inferior);
     return aleatorio;

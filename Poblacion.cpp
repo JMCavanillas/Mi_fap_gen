@@ -1,18 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Poblacion.cpp
- * Author: sobremesa
- * 
+ * Author: Alberto Carrillo Ortega
+ *         Javier Martínez Cavanillas
  * Created on 17 de noviembre de 2017, 17:56
  */
 
 #include "Poblacion.hpp"
 
+/**
+ * Constructor principal 
+ * Crea una nueva poblacion
+ * @param transistors   Vector de transistores sobre los que generar la poblacion
+ * @param restrictions  Conjunto de restricciones que rigen la población
+ * @param indxTransRestr    Indice que indica la posición de cada transistor en el conjunto de restricciones
+ */
 Poblacion::Poblacion(std::vector<Transistor>& transistors, 
         std::vector<Restriction> restrictions, 
         std::vector<int> indxTransRestr)    : transistors_(transistors), 
@@ -22,6 +23,11 @@ Poblacion::Poblacion(std::vector<Transistor>& transistors,
     mundo_ = new std::vector<Especimen>;
 }
 
+/**
+ * Constructor copia
+ *  Genera una copia de una poblacion
+ * @param orig
+ */
 Poblacion::Poblacion(const Poblacion& orig)     : transistors_(orig.transistors_),
         restrictions_(orig.transistors_), indxTransRestr_(orig.indxTransRestr_),
         mejor_(orig.mejor_)
@@ -30,12 +36,18 @@ Poblacion::Poblacion(const Poblacion& orig)     : transistors_(orig.transistors_
     *mundo_ = *orig.mundo_;
 }
 
+/**
+ * Destructor
+ */
 Poblacion::~Poblacion() 
 {
     delete mundo_;
 }
 
-
+/**
+ * Genera y Establece los individuos de una población mediante un algoritmo voraz
+ * @param nIndividuos
+ */
 void Poblacion::iniciarPoblacion(int nIndividuos)
 {
     int vMejor = INT_MAX;
@@ -51,6 +63,11 @@ void Poblacion::iniciarPoblacion(int nIndividuos)
     }
 }
 
+/**
+ * Evoluciona la población usando un método de selección generacional
+ * @param probabilidad  Probabilidad de Cruce
+ * @param tipoCruce     Tipo de cruce a emplear, 0 = BLX 1 = 2 Puntos
+ */
 void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
 {
     // Inicializamos hijos y lista de candidatos
@@ -136,6 +153,11 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
     mejor_ = mejor;
 }
 
+/**
+ * Evoluciona la población usando un método de selección estacionario
+ * @param tipoCruce Tipo de cruce a emplear, 0 = BLX 1 = 2 Puntos
+ * @param parejas   Número de parejas a seleccionar como candidatas
+ */
 void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1) 
 {
     // Inicializamos hijos
@@ -185,7 +207,10 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1)
     
 }
 
-
+/**
+ * Retorna el mejor individuo de la población
+ * @return Especimen
+ */
 Especimen Poblacion::getMejor()
 {
     return (*mundo_)[mejor_];

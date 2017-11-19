@@ -1,19 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Especimen.cpp
- * Author: sobremesa
- * 
+ * Author: Alberto Carrillo Ortega
+ *         Javier Martínez Cavanillas
  * Created on 13 de noviembre de 2017, 17:01
  */
 
 #include "Especimen.hpp"
 
-
+/**
+ * Constructor principal
+ * Genera un Especimen inicando sus frecuencias con un algoritmo voraz
+ * @param transistors   Vector de transistores sobre los que generar la poblacion
+ * @param restrictions  Conjunto de restricciones que rigen la población
+ * @param indxTransRestr    Indice que indica la posición de cada transistor en el conjunto de restricciones
+ */
 Especimen::Especimen(std::vector<Transistor>& transistors, std::vector<Restriction>& restrictions,
         std::vector<int>& indxTransRestr) :
                     transistors_(transistors), restrictions_(restrictions), 
@@ -23,12 +23,21 @@ Especimen::Especimen(std::vector<Transistor>& transistors, std::vector<Restricti
     evaluate();
 }
 
+/**
+ * Constructor copia
+ * Genera una copia del Especimen
+ * @param orig
+ */
 Especimen::Especimen(const Especimen& orig) :
                     transistors_(orig.transistors_), restrictions_(orig.restrictions_),
                     indexes_(orig.indexes_), freqs_(orig.freqs_), indxTransRestr_(orig.indxTransRestr_)
 {
 }
 
+/**
+ * Calcula la frecuencia total actual generada por su conjunto de frecuencias
+ * @return 
+ */
 int Especimen::evaluate()
 {
     totalInterference_ = 0;
@@ -39,6 +48,9 @@ int Especimen::evaluate()
     
 }
 
+/**
+ * Ejecuta algoritmo voraz de inicialización
+ */
 void Especimen::greedInit()
 {
     int k = 0;
@@ -67,6 +79,12 @@ void Especimen::greedInit()
 //    std::cout << std::endl;
 }
 
+/**
+ * Busca la mejor frecuencia teniendo en cuenta las restricciones con sus transistores
+ * de la derecha
+ * @param trans
+ * @return 
+ */
 int Especimen::bestFreq(int trans)
 {
     int minimo=INT_MAX;
@@ -86,6 +104,13 @@ int Especimen::bestFreq(int trans)
     return frecMin;
 }
 
+/**
+ * Calcula el coste individual teniendo en cuenta las restricciones con sus
+ * Transistores de la derecha
+ * @param trans
+ * @param freq
+ * @return 
+ */
 int Especimen::calcCost(int trans, int freq)
 {
     //    Calcula el coste de uno
@@ -133,12 +158,18 @@ bool Especimen::operator !=(Especimen& otro)
     return false;
 }
 
-void Especimen::getInterference()
+/**
+ * Retorna interferencia
+ * @return int 
+ */
+int Especimen::getInterference()
 {
     return totalInterference_;
 }
 
-
+/**
+ * Destructor
+ */
 Especimen::~Especimen() 
 {
 }
