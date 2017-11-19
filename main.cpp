@@ -25,10 +25,10 @@ int main(int argc, char** argv) {
     std::vector<std::vector<int>> freqs;
     std::vector<Transistor> transistors;
 
-    Parser::FRangeParse("instancias-modificadas/scen07/DOM.TXT", freqs);
+    Parser::FRangeParse("instancias-modificadas/scen08/DOM.TXT", freqs);
     std::vector<int> equivalenceIndex;
-    Parser::TParse("instancias-modificadas/scen07/VAR.TXT", &freqs, transistors, equivalenceIndex, 1000);
-    Parser::RTParse("instancias-modificadas/scen07/CTR.TXT", restrictions, equivalenceIndex);
+    Parser::TParse("instancias-modificadas/scen08/VAR.TXT", &freqs, transistors, equivalenceIndex, 1000);
+    Parser::RTParse("instancias-modificadas/scen08/CTR.TXT", restrictions, equivalenceIndex);
     
     
     std::vector<int> indxTransRest;

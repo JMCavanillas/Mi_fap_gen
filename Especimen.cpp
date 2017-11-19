@@ -234,11 +234,24 @@ void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha){
  * @param individuo
  * @param probabilidad probabilidad de mutacion. 0.1 por defecto (1 = 100%)
  */
-void mutar(Especimen &individuo,int probabilidad){
-    for(int i=0; i< individuo.freqs_.size();++i){
-        if(getRandomInt(0,1)<= probabilidad){
-            individuo.indexes_[i]=getRandomInt(0,individuo.indexes_.size()-1);
-            individuo.freqs_[i]=(*individuo.transistors_) [i][individuo.indexes_[i]];
+void mutar(Especimen &individuo, double probabilidad){
+    
+    // Calculamos esperanza matematica
+    int espMat = (int)(individuo.freqs_.size()-1)*probabilidad;
+    
+    // Si la esperanza matematica es 0, se opta por el metodo tradicional
+    if (espMat == 0)
+        for(int i=0; i< individuo.freqs_.size();++i){
+            if( (double)( rand() / RAND_MAX) <= probabilidad){
+                individuo.indexes_[i] = getRandomInt(0,individuo.indexes_.size()-1);
+                individuo.freqs_[i] = (*individuo.transistors_) [i][individuo.indexes_[i]];
+            }
+        }
+    else {
+        for (int i = 0; i < espMat; ++i) {
+            int mutado = getRandomInt(0, individuo.freqs_.size()-1);
+            individuo.indexes_[mutado] = getRandomInt(0,individuo.indexes_.size()-1);
+            individuo.freqs_[mutado] = (*individuo.transistors_) [i][individuo.indexes_[i]];
         }
     }
 }

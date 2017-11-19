@@ -26,8 +26,8 @@ public:
     Poblacion(const Poblacion& orig);
     
     void iniciarPoblacion(int nIndividuos);
-    void evolucionEstacionaria(int tipoCruce, int parejas);
-    void evolucionGeneracional(double probabilidad, int tipoCruce);
+    void evolucionEstacionaria(int tipoCruce, double pMutacion = 0.1, int parejas = 1);
+    void evolucionGeneracional(double probabilidad, int tipoCruce, double pMutacion = 0.1);
     
     double comprobarRepetidos();
     

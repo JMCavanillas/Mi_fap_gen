@@ -67,8 +67,9 @@ void Poblacion::iniciarPoblacion(int nIndividuos)
  * Evoluciona la población usando un método de selección generacional
  * @param probabilidad  Probabilidad de Cruce
  * @param tipoCruce     Tipo de cruce a emplear, 0 = BLX 1 = 2 Puntos
+ * @param pMutacion     Probabilidad de mutacion
  */
-void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
+void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce, double pMutacion)
 {
     // Inicializamos hijos y lista de candidatos
     std::vector<Especimen>* hijos = new std::vector<Especimen>;
@@ -78,6 +79,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
     
     // Calculamos esperanza Matematica
     int numCandidatos = (int)(mundo_->size()*probabilidad);
+    int mutados = (int)(mundo_->size()*pMutacion);
     
     if(!numCandidatos)
         return; 
@@ -121,6 +123,14 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
         
     }
     
+    // Mutacion: Mutamos y evaluamos los mutados
+    for (int i = 0; i < mutados; ++i)
+    {
+        int mutado = getRandomInt(0, hijos->size());
+        mutar( (*hijos)[mutado] );
+        (*hijos)[mutado].evaluate();
+    }
+    
     // Elitismo: Si el mejor ha sido reemplazado la sustituimos por el peor de los hijos
     if( (*mundo_)[mejor_] != (*hijos)[mejor_] ) 
     {
@@ -158,7 +168,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
  * @param tipoCruce Tipo de cruce a emplear, 0 = BLX 1 = 2 Puntos
  * @param parejas   Número de parejas a seleccionar como candidatas
  */
-void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1) 
+void Poblacion::evolucionEstacionaria(int tipoCruce, double pMutacion, int parejas) 
 {
     // Inicializamos hijos
     std::vector<Especimen> hijos;
@@ -176,6 +186,11 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, int parejas=1)
             cruceBlx( hijos [i] , hijos [i+1] );
         else if (tipoCruce == 1)
             cruce2Puntos( hijos [i] , hijos [i+1] );
+    
+    // Mutamos los hijos
+    for(int i = 0; i < hijos.size(); ++i)
+        if( (double)( rand() / RAND_MAX) <= pMutacion)
+            mutar(hijos[i]);
     
     // Evaluamos
     for (int i = 0; i < hijos.size(); ++i)
@@ -215,3 +230,4 @@ Especimen Poblacion::getMejor()
 {
     return (*mundo_)[mejor_];
 }
+
