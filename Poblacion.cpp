@@ -92,7 +92,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce)
     {
         // Comprobamos que no lo hayamos evaluado antes ya que puede haberse cruzado 2 veces
         bool evaluado = false;
-        for (int j = i; j >= 0; --j)
+        for (int j = i-1; j >= 0; --j)
             if(candidatos[i] == candidatos[j])
             {
                 evaluado = true;
