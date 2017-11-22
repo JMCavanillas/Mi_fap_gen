@@ -160,16 +160,16 @@ bool Especimen::operator!=(const Especimen& otro)
 }
 
 bool Especimen::operator<(const Especimen& otro) const{
-    if(totalInterference_<otro.totalInterference_)
-    return true;
-    else
-        if(totalInterference_>otro.totalInterference_)
-            return false;
-        else
-        for(int i = 0; i< freqs_.size();++i)
-            if(freqs_[i]<otro.freqs_[i])
-                return true;
+    if(totalInterference_ < otro.totalInterference_)
+        return true;
+    
+    if(totalInterference_ > otro.totalInterference_)
         return false;
+    
+    if (freqs_ < otro.freqs_)
+        return true;
+    
+    return false;
 }
 
 
@@ -177,7 +177,7 @@ bool Especimen::operator<(const Especimen& otro) const{
  * Retorna interferencia
  * @return int 
  */
-int Especimen::getInterference()
+int Especimen::getInterference() const
 {
     return totalInterference_;
 }

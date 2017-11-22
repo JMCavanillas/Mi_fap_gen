@@ -36,13 +36,13 @@ int main(int argc, char** argv) {
     
     Poblacion poblacionActual(&transistors, &restrictions, &indxTransRest);
     poblacionActual.iniciarPoblacion(50);
-    std::cout << poblacionActual.getMejor().getInterference()<<endl;
-    for (int i = 0; i < 20000; ++i)
+    std::cout << poblacionActual.getMejor().getInterference() << endl;
+    for (int i = 0; i < 10000; ++i)
     {
-        poblacionActual.evolucionGeneracional(0.7, 0);
+        poblacionActual.evolucionEstacionaria(0);
     }
-    
     Especimen mejor = poblacionActual.getMejor();
+
     std::cout << mejor.getInterference();
 //    Especimen greedy(&transistors, &restrictions, &indxTransRest);
 //    

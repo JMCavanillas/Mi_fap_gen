@@ -189,8 +189,9 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, double pMutacion, int parej
     
     // Mutamos los hijos
     for(int i = 0; i < hijos.size(); ++i)
-        if( (double)( rand() / RAND_MAX) <= pMutacion)
+        if( (double)( rand() / RAND_MAX ) <= pMutacion) 
             mutar(hijos[i]);
+
     
     // Evaluamos
     for (int i = 0; i < hijos.size(); ++i)
@@ -228,8 +229,9 @@ bool Poblacion::comprobarRepetidos(){
     for(Especimen caso:*mundo_){
         std::pair<Especimen,int> nodo(caso,0);
         auto iterador=arbol.insert(nodo);
-        if(iterador.first->second++>=(*mundo_).size()*0.8)
-            std::cout << iterador.first->second;
+        ++(iterador.first->second);
+//        std::cout << iterador.first->second << " ";
+        if(iterador.first->second >= mundo_->size()*0.8)           
             return true;
     }
     return false;

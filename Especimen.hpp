@@ -29,7 +29,7 @@ public:
     bool operator!= (const Especimen& otro);
     bool operator< (const Especimen& otro) const;
     
-    int getInterference();
+    int getInterference() const;
     
     friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo = 1,int maximo = 0);
     friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha = 0.5);
