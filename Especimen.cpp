@@ -135,7 +135,7 @@ int Especimen::calcCost(int trans, int freq)
  * @param otro
  * @return 
  */
-bool Especimen::operator==(Especimen& otro) {
+bool Especimen::operator==(const Especimen& otro) {
     
     if(this->totalInterference_==otro.totalInterference_){
         for(int i = 0; i< this->freqs_.size();++i)
@@ -147,7 +147,7 @@ bool Especimen::operator==(Especimen& otro) {
     return true;
 }
 
-bool Especimen::operator!=(Especimen& otro)
+bool Especimen::operator!=(const Especimen& otro)
 {
     if(this->totalInterference_==otro.totalInterference_){
     for(int i = 0; i< this->freqs_.size();++i)
@@ -159,7 +159,7 @@ bool Especimen::operator!=(Especimen& otro)
     return false;
 }
 
-bool Especimen::operator<(Especimen& otro){
+bool Especimen::operator<(const Especimen& otro) const{
     if(totalInterference_<otro.totalInterference_)
     return true;
     else
@@ -171,6 +171,8 @@ bool Especimen::operator<(Especimen& otro){
                 return true;
         return false;
 }
+
+
 /**
  * Retorna interferencia
  * @return int 

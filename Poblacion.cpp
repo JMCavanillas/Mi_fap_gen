@@ -224,7 +224,15 @@ void Poblacion::evolucionEstacionaria(int tipoCruce, double pMutacion, int parej
 
 
 bool Poblacion::comprobarRepetidos(){
-    
+    std::map<Especimen,int> arbol;
+    for(Especimen caso:*mundo_){
+        std::pair<Especimen,int> nodo(caso,0);
+        auto iterador=arbol.insert(nodo);
+        if(iterador.first->second++>=(*mundo_).size()*0.8)
+            std::cout << iterador.first->second;
+            return true;
+    }
+    return false;
 }
 
 /**

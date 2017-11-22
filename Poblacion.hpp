@@ -12,6 +12,7 @@
 #include "Random.hpp"
 #include <vector>
 #include <list>
+#include <map>
 #include <set>
 
 class Poblacion {

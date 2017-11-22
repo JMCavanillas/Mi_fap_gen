@@ -25,9 +25,9 @@ public:
     void greedInit();
     int evaluate();
     
-    bool operator== (Especimen& otro);
-    bool operator!= (Especimen& otro);
-    bool operator< (Especimen& otro);
+    bool operator== (const Especimen& otro);
+    bool operator!= (const Especimen& otro);
+    bool operator< (const Especimen& otro) const;
     
     int getInterference();
     

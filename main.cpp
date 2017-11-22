@@ -19,7 +19,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     
-    int seed = 77377914; // 687685
+    int seed = 77432305; // 687685
     std::srand(seed);
     std::vector<Restriction> restrictions;
     std::vector<std::vector<int>> freqs;
@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
     
     Poblacion poblacionActual(&transistors, &restrictions, &indxTransRest);
     poblacionActual.iniciarPoblacion(50);
+    std::cout << poblacionActual.getMejor().getInterference()<<endl;
     for (int i = 0; i < 20000; ++i)
     {
         poblacionActual.evolucionGeneracional(0.7, 0);
