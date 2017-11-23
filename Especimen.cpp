@@ -19,7 +19,7 @@ Especimen::Especimen(std::vector<Transistor>* transistors, std::vector<Restricti
                     transistors_(transistors), restrictions_(restrictions), 
                     indxTransRestr_(indxTransRestr)
 {
-    greedInit();
+    fullGreedInit();
     evaluate();
 }
 
@@ -78,6 +78,82 @@ void Especimen::greedInit()
 //        std::cout << freqs_[i] << " " ;
 //
 //    std::cout << std::endl;
+}
+
+
+void Especimen::fullGreedInit() 
+{
+    int start = getRandomInt(0, transistors_->size()-1);
+    indexes_.resize(transistors_->size());
+    freqs_.resize(transistors_->size());
+    
+    indexes_[start] = (*transistors_)[start].getRandFrec();
+    freqs_[start] = (*transistors_)[start][indexes_[start]];
+    
+    int cabecera = (start + 1)%transistors_->size();
+    int cola = start;
+    
+    while ( cabecera != cola )
+    {
+        indexes_[cabecera] = fullBestFreq(cabecera, cabecera, cola);
+        freqs_[cabecera] = (*transistors_)[cabecera][indexes_[cabecera]];
+        
+        cabecera = (cabecera + 1)%transistors_->size();
+    }
+}
+
+int Especimen::fullBestFreq(int trans, int cabecera, int cola)
+{
+    int minimo=INT_MAX;
+    int frecMin=-1;
+    int rango = (*transistors_)[trans].getFreqRange();
+    for(int i = 0; i < rango ; ++i)
+    {
+        int coste =fullCalcCost(trans,i, cabecera, cola);
+        if(minimo > coste)
+        {
+            minimo = coste;
+            frecMin=i;
+        }
+        if(!minimo)
+            break;
+    }
+    return frecMin;
+}
+
+int Especimen::fullCalcCost(int trans, int freq, int cabecera, int cola)
+{
+    //    Calcula el coste de uno
+    int k = (*indxTransRestr_)[trans];
+    int cost = 0;
+    if ( trans+1 < (*indxTransRestr_).size())
+    {
+        if(cola < cabecera)
+        {
+            while (k != (*indxTransRestr_)[trans+1]) 
+            {
+                if( (*restrictions_)[k].trans2 > cola &&  (*restrictions_)[k].trans2 < cabecera)
+                    if( (*restrictions_)[k].bound < std::abs((*transistors_)[trans][freq] -
+                        freqs_[(*restrictions_)[k].trans2]) )
+                    cost += (*restrictions_)[k].interference;
+
+                ++k;
+            }
+        }
+        else
+        {
+            while (k != (*indxTransRestr_)[trans+1]) 
+            {
+                if( !((*restrictions_)[k].trans2 > cola &&  (*restrictions_)[k].trans2 < cabecera) )
+                    if( (*restrictions_)[k].bound < std::abs((*transistors_)[trans][freq] -
+                        freqs_[(*restrictions_)[k].trans2]) )
+                    cost += (*restrictions_)[k].interference;
+
+                ++k;
+            }
+        }
+    }
+    return cost;
 }
 
 /**

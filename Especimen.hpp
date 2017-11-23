@@ -23,6 +23,7 @@ public:
     virtual ~Especimen();
     
     void greedInit();
+    void fullGreedInit();
     int evaluate();
     
     bool operator== (const Especimen& otro);
@@ -45,6 +46,9 @@ private:
      
     int bestFreq(int trans);
     int calcCost(int trans, int freq);
+    
+    int fullBestFreq(int trans, int cabecera, int cola);
+    int fullCalcCost(int trans, int freq, int cabecera, int cola);
     
     int totalInterference_;
 };
