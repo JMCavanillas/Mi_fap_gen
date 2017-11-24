@@ -23,9 +23,10 @@
  * @param cruce             Probabilidad de Cruce
  * @param tipo              Tipo de cruce, 0 = BLX 1 = 2 Puntos
  * @param mutacion          Probabilidad de mutación
+ * @param numReinicios      Parametro de retorno, devuelve el numero de reinicios llevado a cabo
  * @return 
  */
-int geneticoGeneracional(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo,double mutacion);
+int geneticoGeneracional(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo,double mutacion, int& numReinicios);
 
 /**
  * Algoritmo genético estacionario
@@ -35,9 +36,10 @@ int geneticoGeneracional(int nIndividuos, int evaluaciones,Poblacion& entorno, d
  * @param parjas            Numero de parejas a cruzar
  * @param tipo              Tipo de cruce, 0 = BLX 1 = 2 Puntos
  * @param mutacion          Probabilidad de mutación
+ * @param numReinicios      Parametro de retorno, devuelve el numero de reinicios llevado a cabo
  * @return 
  */
-int geneticoEstacionario(int nIndividuos, int evaluaciones,Poblacion& entorno, int parejas, int tipo, double mutacion);
+int geneticoEstacionario(int nIndividuos, int evaluaciones,Poblacion& entorno, int parejas, int tipo, double mutacion, int& numReinicios);
 
 #endif /* ALGORITMOSGENETICOS_HPP */
 

@@ -67,7 +67,7 @@ void Poblacion::iniciarPoblacion(int nIndividuos)
  * Evoluciona la población usando un método de selección generacional
  * @param probabilidad  Probabilidad de Cruce
  * @param tipoCruce     Tipo de cruce a emplear, 0 = BLX 1 = 2 Puntos
- * @param pMutacion     Probabilidad de mutacion
+ * @param pMutacion     Probabilidad de mutación
  */
 void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce, double pMutacion)
 {
@@ -166,6 +166,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce, double
 /**
  * Evoluciona la población usando un método de selección estacionario
  * @param tipoCruce Tipo de cruce a emplear, 0 = BLX 1 = 2 Puntos
+ * @param pMutacion Probabilidad de mutación
  * @param parejas   Número de parejas a seleccionar como candidatas
  */
 void Poblacion::evolucionEstacionaria(int tipoCruce, double pMutacion, int parejas) 
