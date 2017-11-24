@@ -11,9 +11,6 @@
 
 #include "Poblacion.hpp"
 
-//enum Cruce {
-//    blx, en2Puntos
-//};
 
 /**
  * Algoritmo genético generacional con elitismo

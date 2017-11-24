@@ -24,13 +24,17 @@ int main(int argc, char** argv) {
         if (argc != 7)
             throw std::domain_error("Number of arguments is not correct");
 
+        std::string path = argv[1];     std::string argv2 = argv[2]; 
+        std::string argv4 = argv[4];    std::string argv5 = argv[5];
+        std::string argv6 = argv[6];
+        
         std::string dom_p, var_p, ctr_p;
-        if(argv[2] == "-uc")
+        if(argv2 == "-uc")
         {
             dom_p = "/DOM.TXT";
             var_p = "/VAR.TXT";
             ctr_p = "/CTR.TXT";
-        } else if(argv[2] == "-lc")
+        } else if(argv2 == "-lc")
         {
             dom_p = "/dom.txt";
             var_p = "/var.txt";
@@ -40,12 +44,12 @@ int main(int argc, char** argv) {
                 "posibles son -uc para buscar archivos en mayúscula y -lc para buscar archivos"
                     " en minúscula");
 
-        std::string path = argv[1];
-        std::string GenMode = argv[4];
+
+        
         int tipoCruce;
-        if (argv[5] == "blx")
+        if (argv5 == "blx")
             tipoCruce = 0;
-        else if (argv[5] == "2puntos")
+        else if (argv5 == "2puntos")
             tipoCruce = 1;
         else
             throw std::invalid_argument("El argumento no es correcto, los argumentos "
@@ -68,10 +72,10 @@ int main(int argc, char** argv) {
         Poblacion poblacionActual(&transistors, &restrictions, &indxTransRest);
         poblacionActual.iniciarPoblacion(50);
 
-        if (argv[6] == "-t")
+        if (argv6 == "-t")
             std::cout << "Interferencia Inicial Interferencia Final NumReinicios" << std::endl;
-        else if (argv[6] != "-o")
-            throw std::invalid_argument("El argumento no es correcto, los argumentos posibles son -t"
+        else if (argv6 != "-o")
+            throw std::invalid_argument("El argumento no es correcto, los argumentos posibles son -t "
                     "para mostrar en terminal y -o para mostrar solucion optimizada para guardar en "
                     "un fichero de texto"
                    );
@@ -79,9 +83,9 @@ int main(int argc, char** argv) {
         std::cout << poblacionActual.getMejor().getInterference() << "  ";
         
         int mejor, numReinicios;
-        if(argv[4] == "generacional")
+        if(argv4 == "generacional")
             mejor = geneticoGeneracional(50, 20000, poblacionActual, 0.7, tipoCruce, 0.1, numReinicios);
-        else if (argv[4] == "estacionario")
+        else if (argv4 == "estacionario")
             mejor = geneticoEstacionario(50,20000,poblacionActual,1,1,0.1,numReinicios);
         else
             throw std::invalid_argument("El argumento no es correcto, los argumentos posibles son "
@@ -90,8 +94,8 @@ int main(int argc, char** argv) {
                );
         
         std::cout << mejor << " " << numReinicios << std::endl;
-    } catch (std::exception e) {
-        std::cout << e.what();
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
     }
     
 //    Especimen greedy(&transistors, &restrictions, &indxTransRest);
