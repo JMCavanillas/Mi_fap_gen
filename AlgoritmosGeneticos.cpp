@@ -1,9 +1,8 @@
 
 #include "AlgoritmosGeneticos.hpp"
 
-int geneticoGeneracional(int nIndividuos,int evaluaciones,Poblacion& entorno,double cruce,int tipo,double mutacion, int& numReinicios){
+int geneticoGeneracional(int nIndividuos,int evaluaciones,Poblacion& entorno,double cruce,int tipo,double mutacion){
     
-    numReinicios = 0;
     entorno.iniciarPoblacion(nIndividuos);
     while(evaluaciones >= 0){
         
@@ -11,7 +10,6 @@ int geneticoGeneracional(int nIndividuos,int evaluaciones,Poblacion& entorno,dou
         
         if(entorno.comprobarRepetidos()){
             entorno.reinicializar();
-            ++numReinicios;
         }
         
         evaluaciones-=nIndividuos*cruce;        
@@ -19,9 +17,8 @@ int geneticoGeneracional(int nIndividuos,int evaluaciones,Poblacion& entorno,dou
     return entorno.getMejor().getInterference();
 }
 
-int geneticoEstacionario(int nIndividuos,int evaluaciones,Poblacion& entorno,int parejas,int tipo,double mutacion, int& numReinicios){
+int geneticoEstacionario(int nIndividuos,int evaluaciones,Poblacion& entorno,int parejas,int tipo,double mutacion){
     
-    numReinicios = 0;
     if(parejas <= 0)
         parejas = 1;
 
@@ -32,7 +29,6 @@ int geneticoEstacionario(int nIndividuos,int evaluaciones,Poblacion& entorno,int
         
         if(entorno.comprobarRepetidos()){
             entorno.reinicializar();
-            ++numReinicios;
         }
         
         evaluaciones-=parejas*2;        

@@ -81,19 +81,22 @@ int main(int argc, char** argv) {
                    );
 
         std::cout << poblacionActual.getMejor().getInterference() << "  ";
-        
-        int mejor, numReinicios;
-        if(argv4 == "generacional")
-            mejor = geneticoGeneracional(50, 20000, poblacionActual, 0.7, tipoCruce, 0.1, numReinicios);
-        else if (argv4 == "estacionario")
-            mejor = geneticoEstacionario(50,20000,poblacionActual,1,1,0.1,numReinicios);
-        else
-            throw std::invalid_argument("El argumento no es correcto, los argumentos posibles son "
-                "generacional para seguir un modelo de evolución generacional o estacionario para "
-                "seguir un modelo de evolución estacionario"
-               );
-        
-        std::cout << mejor << " " << numReinicios << std::endl;
+    
+        if (argv4 != "greedy")
+        {
+            int mejor, numReinicios;
+            if(argv4 == "generacional")
+                mejor = geneticoGeneracional(50, 20000, poblacionActual, 0.7, tipoCruce, 0.1);
+            else if (argv4 == "estacionario")
+                mejor = geneticoEstacionario(50,20000,poblacionActual,1,1,0.1);
+            else
+                throw std::invalid_argument("El argumento no es correcto, los argumentos posibles son "
+                    "generacional para seguir un modelo de evolución generacional o estacionario para "
+                    "seguir un modelo de evolución estacionario. Greedy para indicar solo solución greedy inicial"
+                   );
+
+            std::cout << mejor << "  ";
+        }
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
