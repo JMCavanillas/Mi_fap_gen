@@ -248,10 +248,10 @@ void Poblacion::reinicializar(){
     mundo_->clear();
     
     mejor_=0;
-    (*mundo_)[0]=ejemplar;
+    (*mundo_).push_back(ejemplar);
     
     int vMejor=ejemplar.getInterference();
-    for(int i = 0; i < nIndividuos; ++i)
+    for(int i = 1; i < nIndividuos; ++i)
     {
         Especimen nuevoEsp( transistors_ , restrictions_, indxTransRestr_);
         mundo_->push_back(nuevoEsp);

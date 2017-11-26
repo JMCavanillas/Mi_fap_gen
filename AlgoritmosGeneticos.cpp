@@ -5,22 +5,23 @@ int geneticoGeneracional(int nIndividuos,int evaluaciones,Poblacion& entorno,dou
     
     entorno.iniciarPoblacion(nIndividuos);
     int generaciones= 20;
-    auto guardia = entorno.getMejor();
+    int guardia = entorno.getMejor().getInterference();
     while(evaluaciones >= 0){
         
         entorno.evolucionGeneracional(cruce,tipo,mutacion);
         
-        if(guardia != entorno.getMejor()){
+        if(guardia != entorno.getMejor().getInterference()){
             generaciones = 20;
-            guardia=entorno.getMejor();
-        }else{
-            generaciones--;
-            if(generaciones==0){
+            guardia=entorno.getMejor().getInterference();
+        } else {
+            --generaciones;
+            if(!generaciones){
                 entorno.reinicializar();
                 evaluaciones-=nIndividuos;
                 continue;
             }
         }
+        
         if(entorno.comprobarRepetidos()){
             entorno.reinicializar();
             evaluaciones-=nIndividuos-1;
