@@ -73,15 +73,16 @@ int main(int argc, char** argv) {
         poblacionActual.iniciarPoblacion(50);
 
         if (argv6 == "-t")
-            std::cout << "Interferencia Inicial Interferencia Final NumReinicios" << std::endl;
+            std::cout << "Interferencia Inicial\tInterferencia Final " << std::endl;
         else if (argv6 != "-o")
             throw std::invalid_argument("El argumento no es correcto, los argumentos posibles son -t "
                     "para mostrar en terminal y -o para mostrar solucion optimizada para guardar en "
                     "un fichero de texto"
                    );
 
-        std::cout << poblacionActual.getMejor().getInterference() << "  ";
-    
+        std::cout << poblacionActual.getMejor().getInterference() << "\t";
+        if (argv6 == "-t")
+            std::cout << "\t\t";
         if (argv4 != "greedy")
         {
             int mejor, numReinicios;
@@ -95,8 +96,10 @@ int main(int argc, char** argv) {
                     "seguir un modelo de evolución estacionario. Greedy para indicar solo solución greedy inicial"
                    );
 
-            std::cout << mejor << "  ";
+            std::cout << mejor << "\t";
         }
+        if (argv6 == "-t")
+            std::cout << std::endl;
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
