@@ -93,6 +93,9 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce, double
         int candidato1 = getRandomInt(0, mundo_->size()-1);
         int candidato2 = getRandomInt(0, mundo_->size()-1);
         
+        while (candidato1 == candidato2)
+            candidato2 = getRandomInt(0, mundo_->size()-1);
+        
         if( (*mundo_)[candidato1].getInterference() < (*mundo_)[candidato2].getInterference() )
             candidatos.push_back( candidato1 );
         else
@@ -142,7 +145,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce, double
                 vPeor = (*hijos)[i].getInterference();
                 peor = i;
             }
-        
+
         (*hijos)[peor] = (*mundo_)[mejor_];
     }
     
@@ -231,7 +234,6 @@ bool Poblacion::comprobarRepetidos(){
         std::pair<Especimen,int> nodo(caso,0);
         auto iterador=arbol.insert(nodo);
         ++(iterador.first->second);
-//        std::cout << iterador.first->second << " ";
         if(iterador.first->second >= mundo_->size()*0.8)           
             return true;
     }

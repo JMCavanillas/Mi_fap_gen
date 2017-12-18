@@ -74,10 +74,6 @@ void Especimen::greedInit()
         ++k;
     }
     
-//    for(int i = 0; i < freqs_.size() ; ++i)
-//        std::cout << freqs_[i] << " " ;
-//
-//    std::cout << std::endl;
 }
 
 
@@ -300,23 +296,29 @@ void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo,int maximo){
  * @param padreB Especimen padreB
  * @param alpha Porcentaje de reducción del intervalo. 0,5 por defecto
  */
+
+////////////////////////////////////////////////////////////////////////////////////
+/// MAL REHACER
+////////////////////////////////////////////////////////////////////////////////////
 void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha){
-    int transistor=getRandomInt(0,padreA.freqs_.size());
     
-    int intervalo;
-    
-    intervalo=abs(padreA.indexes_[transistor]-padreB.indexes_[transistor]);
-    
-    if(intervalo>=padreA.indexes_.size()/6)
-        if(padreA.indexes_[transistor]<=padreB.indexes_[transistor]){
-            padreA.indexes_[transistor]-=getRandomInt(0,intervalo*alpha);
-            padreB.indexes_[transistor]+=getRandomInt(0,intervalo*alpha);
-        }else{
-            padreB.indexes_[transistor]-=getRandomInt(0,intervalo*alpha);
-            padreA.indexes_[transistor]+=getRandomInt(0,intervalo*alpha);
-        }
-    padreA.freqs_[transistor]=(*padreA.transistors_) [transistor][padreA.indexes_[transistor]];
-    padreB.freqs_[transistor]=(*padreB.transistors_) [transistor][padreB.indexes_[transistor]];
+    for (int transistor = 0; transistor < padreA.freqs_.size(); ++transistor)
+    {
+        int intervalo;
+
+        intervalo=abs(padreA.indexes_[transistor]-padreB.indexes_[transistor]);
+
+        if(intervalo>=padreA.indexes_.size()/6)
+            if(padreA.indexes_[transistor]<=padreB.indexes_[transistor]){
+                padreA.indexes_[transistor]-=getRandomInt(0,intervalo*alpha);
+                padreB.indexes_[transistor]+=getRandomInt(0,intervalo*alpha);
+            }else{
+                padreB.indexes_[transistor]-=getRandomInt(0,intervalo*alpha);
+                padreA.indexes_[transistor]+=getRandomInt(0,intervalo*alpha);
+            }
+        padreA.freqs_[transistor]=(*padreA.transistors_) [transistor][padreA.indexes_[transistor]];
+        padreB.freqs_[transistor]=(*padreB.transistors_) [transistor][padreB.indexes_[transistor]];
+    }
 }
 
 /**
