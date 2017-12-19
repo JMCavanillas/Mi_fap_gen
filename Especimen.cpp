@@ -297,25 +297,29 @@ void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo,int maximo){
  * @param alpha Porcentaje de reducción del intervalo. 0,5 por defecto
  */
 
-////////////////////////////////////////////////////////////////////////////////////
-/// MAL REHACER
-////////////////////////////////////////////////////////////////////////////////////
 void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha){
     
     for (int transistor = 0; transistor < padreA.freqs_.size(); ++transistor)
     {
-        int intervalo;
-
-        intervalo=abs(padreA.indexes_[transistor]-padreB.indexes_[transistor]);
-
+        int max,min;
+        
+        float intervalo;
+    
+        intervalo=abs(padreA.indexes_[transistor]-padreB.indexes_[transistor])*alpha;
+        max=std::max<int>( padreA.indexes_[transistor], padreB.indexes_[transistor]);
+        min=std::min<int>( padreA.indexes_[transistor], padreB.indexes_[transistor]);
+        max=max+intervalo;
+        max=std::min<int>(max, padreA.indexes_.size());
+        min=std::max<int>(min,0);
         if(intervalo>=padreA.indexes_.size()/6)
             if(padreA.indexes_[transistor]<=padreB.indexes_[transistor]){
-                padreA.indexes_[transistor]-=getRandomInt(0,intervalo*alpha);
-                padreB.indexes_[transistor]+=getRandomInt(0,intervalo*alpha);
+                padreA.indexes_[transistor]=getRandomInt(min,max);
+                padreB.indexes_[transistor]=getRandomInt(min,max);
             }else{
-                padreB.indexes_[transistor]-=getRandomInt(0,intervalo*alpha);
-                padreA.indexes_[transistor]+=getRandomInt(0,intervalo*alpha);
+                padreB.indexes_[transistor]=getRandomInt(min,max);
+                padreA.indexes_[transistor]=getRandomInt(min,max);
             }
+
         padreA.freqs_[transistor]=(*padreA.transistors_) [transistor][padreA.indexes_[transistor]];
         padreB.freqs_[transistor]=(*padreB.transistors_) [transistor][padreB.indexes_[transistor]];
     }
