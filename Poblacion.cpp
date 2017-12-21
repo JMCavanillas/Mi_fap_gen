@@ -55,12 +55,8 @@ void Poblacion::iniciarPoblacion(int nIndividuos)
     {
         Especimen nuevoEsp( transistors_ , restrictions_, indxTransRestr_);
         mundo_->push_back(nuevoEsp);
-        if(vMejor > nuevoEsp.getInterference())
-        {   
-            mejor_ = i;
-            vMejor = nuevoEsp.getInterference();
-        }
     }
+    actualizarMejor();
 }
 
 /**
@@ -164,6 +160,7 @@ void Poblacion::evolucionGeneracional(double probabilidad, int tipoCruce, double
         }
     
     mejor_ = mejor;
+//    (*mundo_)[mejor].evaluate();
 }
 
 /**
@@ -273,3 +270,18 @@ Especimen Poblacion::getMejor()
     return (*mundo_)[mejor_];
 }
 
+
+void Poblacion::actualizarMejor()
+{
+    // Calculamos y actualizamos el mejor
+    int mejor = 0;
+    int vMejor = (*mundo_)[0].getInterference();
+    for(int i = 1; i < mundo_->size(); ++i)
+        if( vMejor > (*mundo_)[i].getInterference() )
+        {
+            vMejor = (*mundo_)[i].getInterference();
+            mejor = i;
+        }
+    
+    mejor_ = mejor;
+}

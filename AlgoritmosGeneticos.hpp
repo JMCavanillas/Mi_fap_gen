@@ -29,7 +29,7 @@ int geneticoGeneracional(int nIndividuos, int evaluaciones,Poblacion& entorno, d
  * @param nIndividuos       Numero de individuos de la poblacion con la que ejecutar el algoritmo
  * @param evaluaciones      Numero de evaluaciones de los individuos
  * @param entorno           Poblacion sobre la que aplicar el algoritmo
- * @param parjas            Numero de parejas a cruzar
+ * @param parejas            Numero de parejas a cruzar
  * @param tipo              Tipo de cruce, 0 = BLX 1 = 2 Puntos
  * @param mutacion          Probabilidad de mutación
  * @return 

@@ -20,7 +20,7 @@ int Transistor::getNRange()
 int Transistor::getRandFrec()
 {   
     int frecuencia=getRandomInt(0,getFreqRange()-1);
-    return (*frecs_)[NRange_][frecuencia];
+    return frecuencia;
 }
 
 void Transistor::setFrecs(std::vector<std::vector<int>>* frecs)

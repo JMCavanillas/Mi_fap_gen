@@ -22,9 +22,13 @@ public:
     Especimen(const Especimen& orig);
     virtual ~Especimen();
     
-    void greedInit();
-    void fullGreedInit();
+    int getSize();
+    int getFreqRange(int trans);
+    
     int evaluate();
+    
+    int scanVal(int trans, int pos);
+    void sigVal(int trans, int pos);
     
     bool operator== (const Especimen& otro);
     bool operator!= (const Especimen& otro);
@@ -33,7 +37,7 @@ public:
     int getInterference() const;
     
     friend void cruce2Puntos(Especimen &padreA, Especimen &padreB,int minimo = 1,int maximo = 0);
-    friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha = 0.5);
+    friend void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha = 0.1);
     friend void mutar(Especimen &individuo,double probabilidad = 0.1);
 private:
     std::vector<Transistor>* transistors_;
@@ -43,7 +47,11 @@ private:
     std::vector<int> freqs_;
     std::vector<int> indexes_;
     std::vector<int>* indxTransRestr_;
-     
+    
+    void greedInit();
+    void randInit();
+    void fullGreedInit();
+    
     int bestFreq(int trans);
     int calcCost(int trans, int freq);
     

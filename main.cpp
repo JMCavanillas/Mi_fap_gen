@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
         std::vector<int> indxTransRest;
         Parser::genIndexTransRestr(transistors, restrictions, indxTransRest);
         Poblacion poblacionActual(&transistors, &restrictions, &indxTransRest);
-        poblacionActual.iniciarPoblacion(50);
+        poblacionActual.iniciarPoblacion(20);
 
         if (argv6 == "-t")
             std::cout << "Interferencia Inicial\tInterferencia Final " << std::endl;
@@ -90,6 +90,12 @@ int main(int argc, char** argv) {
                 mejor = geneticoGeneracional(50, 20000, poblacionActual, 0.7, tipoCruce, 0.1);
             else if (argv4 == "estacionario")
                 mejor = geneticoEstacionario(50,20000,poblacionActual,1,1,0.1);
+            else if (argv4 == "am1010")
+                mejor = am1010(20,20000,poblacionActual,0.7,tipoCruce,0.1);
+            else if (argv4 == "am1001")
+                mejor = am1001(20,20000,poblacionActual,0.7,tipoCruce,0.1);
+            else if (argv4 == "am1001Mej")
+                mejor = am1001Mej(20,20000,poblacionActual,0.7,tipoCruce,0.1);
             else
                 throw std::invalid_argument("El argumento no es correcto, los argumentos posibles son "
                     "generacional para seguir un modelo de evolución generacional o estacionario para "

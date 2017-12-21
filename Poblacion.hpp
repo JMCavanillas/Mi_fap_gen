@@ -29,8 +29,15 @@ public:
     void evolucionEstacionaria(int tipoCruce, double pMutacion = 0.1, int parejas = 1);
     void evolucionGeneracional(double probabilidad, int tipoCruce, double pMutacion = 0.1);
     
+    friend int am1010(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo, double mutacion);
+
+    friend int am1001(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo, double mutacion);
+
+    friend int am1001Mej(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo, double mutacion);
+    
     bool comprobarRepetidos();
     
+    void actualizarMejor();
     void reinicializar();
     
     Especimen getMejor();

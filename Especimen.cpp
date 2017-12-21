@@ -19,7 +19,7 @@ Especimen::Especimen(std::vector<Transistor>* transistors, std::vector<Restricti
                     transistors_(transistors), restrictions_(restrictions), 
                     indxTransRestr_(indxTransRestr)
 {
-    fullGreedInit();
+    randInit();
     evaluate();
 }
 
@@ -48,6 +48,52 @@ int Especimen::evaluate()
             totalInterference_ += (*restrictions_)[i].interference;
     
 }
+
+/**
+ * Prevee la interferencia despues de cambios en frecuencia
+ * @param trans
+ */
+int Especimen::scanVal(int trans, int pos)
+{
+    int prevision = 0;
+    int rfreq = (*transistors_)[trans].getFreqRange();
+    prevision = totalInterference_ - fullCalcCost(trans, indexes_[trans], 0, transistors_->size() );
+    
+    indexes_[trans] = (indexes_[trans] + pos)%rfreq;
+    freqs_[trans] = (*transistors_)[trans][indexes_[trans]];
+    
+    prevision += fullCalcCost(trans, indexes_[trans], 0, transistors_->size() );
+    
+    indexes_[trans] = (rfreq + (indexes_[trans] - pos)%rfreq) % rfreq;
+    freqs_[trans] = (*transistors_)[trans][indexes_[trans]];
+    return prevision;
+}
+
+/**
+ * Avanza pos frecuencias el transistor seleccionado
+ * @param trans
+ * @param pos
+ */
+void Especimen::sigVal(int trans, int pos)
+{
+    totalInterference_ -= fullCalcCost(trans, indexes_[trans], 0, transistors_->size()-1 );
+    indexes_[trans] = (indexes_[trans] + pos)%(*transistors_)[trans].getFreqRange();
+    freqs_[trans] = (*transistors_)[trans][indexes_[trans]];
+    totalInterference_ += fullCalcCost(trans, indexes_[trans], 0, transistors_->size()-1 );
+}
+
+void Especimen::randInit()
+{
+    indexes_.resize(transistors_->size());
+    freqs_.resize(transistors_->size());
+    for (int i = 0; i < transistors_->size(); ++i)
+    {
+        indexes_[i] = (*transistors_)[i].getRandFrec();
+        freqs_[i] = (*transistors_)[i][indexes_[i]];
+    }
+
+}
+
 
 /**
  * Ejecuta algoritmo voraz de inicialización
@@ -117,6 +163,14 @@ int Especimen::fullBestFreq(int trans, int cabecera, int cola)
     return frecMin;
 }
 
+/**
+ * Calcula el coste que añade un transistor a su configuracion de compañeros actual
+ * @param trans Indice del transistor actual
+ * @param freq Indice de la frecuencia actual
+ * @param cabecera
+ * @param cola
+ * @return 
+ */
 int Especimen::fullCalcCost(int trans, int freq, int cabecera, int cola)
 {
     //    Calcula el coste de uno
@@ -134,6 +188,16 @@ int Especimen::fullCalcCost(int trans, int freq, int cabecera, int cola)
                     cost += (*restrictions_)[k].interference;
 
                 ++k;
+            }  
+            
+            k = (*indxTransRestr_)[trans];
+            while(k >= 0 && k >= cola)
+            {
+                if ((*restrictions_)[k].trans2 == trans)
+                    if( (*restrictions_)[k].bound < std::abs((*transistors_)[trans][freq] -
+                        freqs_[(*restrictions_)[k].trans1]) )
+                        cost += (*restrictions_)[k].interference;
+                --k;
             }
         }
         else
@@ -147,8 +211,19 @@ int Especimen::fullCalcCost(int trans, int freq, int cabecera, int cola)
 
                 ++k;
             }
+            
+            k = (*indxTransRestr_)[trans];
+            while(k >= 0)
+            {
+                if ((*restrictions_)[k].trans2 == trans)
+                    if( (*restrictions_)[k].bound < std::abs((*transistors_)[trans][freq] -
+                        freqs_[(*restrictions_)[k].trans1]) )
+                        cost += (*restrictions_)[k].interference;
+                --k;
+            }
         }
     }
+
     return cost;
 }
 
@@ -308,20 +383,21 @@ void cruceBlx(Especimen &padreA, Especimen &padreB,float alpha){
         intervalo=abs(padreA.indexes_[transistor]-padreB.indexes_[transistor])*alpha;
         max=std::max<int>( padreA.indexes_[transistor], padreB.indexes_[transistor]);
         min=std::min<int>( padreA.indexes_[transistor], padreB.indexes_[transistor]);
-        max=max+intervalo;
-        max=std::min<int>(max, padreA.indexes_.size());
+        max += intervalo;
+        min -= intervalo;
+        max=std::min<int>(max, padreA.indexes_.size()-1);
         min=std::max<int>(min,0);
-        if(intervalo>=padreA.indexes_.size()/6)
-            if(padreA.indexes_[transistor]<=padreB.indexes_[transistor]){
+        if(intervalo > 0)
+        {
+           
                 padreA.indexes_[transistor]=getRandomInt(min,max);
                 padreB.indexes_[transistor]=getRandomInt(min,max);
-            }else{
-                padreB.indexes_[transistor]=getRandomInt(min,max);
-                padreA.indexes_[transistor]=getRandomInt(min,max);
-            }
+                padreA.freqs_[transistor]=(*padreA.transistors_) [transistor][padreA.indexes_[transistor]];
+                padreB.freqs_[transistor]=(*padreB.transistors_) [transistor][padreB.indexes_[transistor]];
+        }
 
-        padreA.freqs_[transistor]=(*padreA.transistors_) [transistor][padreA.indexes_[transistor]];
-        padreB.freqs_[transistor]=(*padreB.transistors_) [transistor][padreB.indexes_[transistor]];
+
+
     }
 }
 
@@ -350,4 +426,15 @@ void mutar(Especimen &individuo, double probabilidad){
             individuo.freqs_[mutado] = (*individuo.transistors_) [i][individuo.indexes_[i]];
         }
     }
+}
+
+int Especimen::getFreqRange(int trans)
+{
+    return (*transistors_)[trans].getFreqRange();
+}
+
+
+int Especimen::getSize()
+{
+    return transistors_->size();
 }
