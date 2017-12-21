@@ -80,8 +80,13 @@ int busquedaLineal( Especimen& esp, int numEval)
 
 int am1010(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo, double mutacion)
 {
+    int generaciones = 2;
+    int guardia = entorno.getMejor().getInterference();
     while (evaluaciones >= 0)
     {
+        if (!generaciones)
+            entorno.reinicializar();
+        
         geneticoGeneracional(20, 140, entorno, 0.7, tipo, 0.1);
 //        std::cout << "Nuevas 10 Gen ------------" << std::endl;
         evaluaciones -= 140;
@@ -94,12 +99,22 @@ int am1010(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, i
             entorno.actualizarMejor();
             evaluaciones -= 200;
         }
+        
+        if(guardia > entorno.getMejor().getInterference())
+        {
+            generaciones = 2;
+            guardia = entorno.getMejor().getInterference();
+        } else {
+            --generaciones;
+        }
     }
     return entorno.getMejor().getInterference();
 }
 
 int am1001(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo, double mutacion)
 {
+    int generaciones = 2;
+    int guardia = entorno.getMejor().getInterference();
     while (evaluaciones >= 0)
     {
         geneticoGeneracional(20, 140, entorno, 0.7, tipo, 0.1);
@@ -118,12 +133,22 @@ int am1001(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, i
             entorno.actualizarMejor();
             evaluaciones -= 200;
         }
+        
+        if(guardia > entorno.getMejor().getInterference())
+        {
+            generaciones = 2;
+            guardia = entorno.getMejor().getInterference();
+        } else {
+            --generaciones;
+        }
     }
     return entorno.getMejor().getInterference();
 }
 
 int am1001Mej(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce, int tipo, double mutacion)
 {
+    int generaciones = 2;
+    int guardia = entorno.getMejor().getInterference();
     while (evaluaciones >= 0)
     {
         geneticoGeneracional(20, 140, entorno, 0.7, tipo, 0.1);
@@ -154,6 +179,14 @@ int am1001Mej(int nIndividuos, int evaluaciones,Poblacion& entorno, double cruce
             
             entorno.actualizarMejor();
             evaluaciones -= 200;
+        }
+        
+        if(guardia > entorno.getMejor().getInterference())
+        {
+            generaciones = 2;
+            guardia = entorno.getMejor().getInterference();
+        } else {
+            --generaciones;
         }
     }
     return entorno.getMejor().getInterference();
